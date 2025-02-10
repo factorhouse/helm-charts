@@ -27,7 +27,7 @@ You can then run `helm search repo factorhouse` to see the available charts.
 
 Please refer to each individual charts README for instructions on how to get up and running.
 
-For a quick reference, check out our [examples/](examples/) directory in this repository to see common configurations of our charts.
+For a quick reference, check out the [examples/](examples/) directory to see common configurations of our charts.
 
 # License
 
