@@ -1,6 +1,7 @@
 # Factor House Helm Charts
 
 [![Release Charts](https://github.com/factorhouse/helm-charts/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/factorhouse/helm-charts/actions/workflows/release.yml)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/factorhouse)](https://artifacthub.io/packages/search?repo=factorhouse)
 
 Official Helm Charts for Factor House products. Currently supported:
 
@@ -9,7 +10,7 @@ Official Helm Charts for Factor House products. Currently supported:
 * [Flex](charts/flex/README.md) (`factorhouse/flex`)
 * [Flex Community Edition](charts/flex-ce/README.md) (`factorhouse/flex-ce`)
 
-# How to use Factor House Helm repository 
+# Installation
 
 [Helm](https://helm.sh/) must be installed to use the charts. Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
 
