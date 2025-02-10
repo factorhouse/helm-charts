@@ -17,7 +17,7 @@ Official Helm Charts for Factor House products. Currently supported:
 Once Helm has been setup you need to add this repository to your Helm repositories:
 
 ```bash
-helm repo add factorhouse https://charts.factorhouse.com
+helm repo add factorhouse https://charts.factorhouse.io
 helm repo update
 ```
 
