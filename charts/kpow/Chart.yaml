@@ -1,0 +1,20 @@
+apiVersion: v2
+name: kpow
+description: Run Kpow for Apache Kafka in Kubernetes
+type: application
+version: 1.0.58
+appVersion: "93.4"
+keywords:
+  - kafka
+  - kafka-ui
+  - kafka-connect
+  - schema-registry
+  - ksqldb
+  - monitoring
+home: "https://kpow.io"
+sources:
+  - "https://github.com/factorhouse/kpow"
+  - "https://github.com/factorhouse/kpow-helm-charts/"
+maintainers:
+  - name: "Factor House Support"
+    email: "support@factorhouse.io"
