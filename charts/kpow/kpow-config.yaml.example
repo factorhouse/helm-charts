@@ -8,7 +8,7 @@ data:
 
   ### Note: The simplest Kpow configuration requires only LICENSE_* and BOOTSTRAP.
 
-  ### License Configuration (https://kpow.io/try <- 30 day trial licenses available)
+  ### License Configuration (https://factorhouse.io/kpow/get-started/ <- 30 day trial licenses available)
   ### Note: If using the AWS Marketplace Kpow Container you do not need to supply LICENSE* parameters
   ###       (https://aws.amazon.com/marketplace/seller-profile?id=ab356f1d-3394-4523-b5d4-b339e3cca9e0)
 
@@ -74,6 +74,16 @@ data:
   # CONNECT_GROUP_ID: "connect-group-id" (optional)
   # CONNECT_OFFSET_STORAGE_TOPIC: "connect-topic" (optional)
 
+  ## ksqlDB Configuration
+
+  # KSQLDB_HOST: "skdfhfk-x54nr.us-east-2.aws.confluent.cloud"
+  # KSQLDB_PORT: "443"
+  # KSQLDB_BASIC_AUTH_USER: "$API_KEY"
+  # KSQLDB_BASIC_AUTH_PASSWORD: "$API_SECRET"
+  # KSQLDB_USE_TLS: "true"
+  # KSQLDB_USE_ALPN: "true"
+  # KSQLDB_NAME: "Confluent ksqlDB"
+
   ### System Configuration
 
   # PORT: "3000" - the port to serve content
@@ -118,18 +128,30 @@ data:
 
   ## Global Access Controls Configuration (default to false, apply to all users, overriden if you configure RBAC)
 
-  # ALLOW_TOPIC_CREATE: "true"
-  # ALLOW_TOPIC_DELETE: "true"
-  # ALLOW_TOPIC_INSPECT: "true"
-  # ALLOW_TOPIC_PRODUCE: "true"
-  # ALLOW_TOPIC_EDIT: "true"
-  # ALLOW_BROKER_EDIT: "true"
-  # ALLOW_GROUP_EDIT: "true"
-  # ALLOW_SCHEMA_CREATE: "true"
-  # ALLOW_SCHEMA_EDIT: "true"
-  # ALLOW_CONNECT_CREATE: "true"
-  # ALLOW_CONNECT_EDIT: "true"
-  # ALLOW_ACL_EDIT: "true"
+  # ALLOW_KPOW_ADMIN: true
+  # ALLOW_TOPIC_INSPECT: true
+  # ALLOW_TOPIC_PRODUCE: true
+  # ALLOW_TOPIC_CREATE: true
+  # ALLOW_TOPIC_EDIT: true
+  # ALLOW_TOPIC_DELETE: true
+  # ALLOW_TOPIC_TRUNCATE: true
+  # ALLOW_TOPIC_ELECT_LEADER: true
+  # ALLOW_TOPIC_ALTER_REASSIGNMENTS: true
+  # ALLOW_GROUP_EDIT: true
+  # ALLOW_BROKER_EDIT: true
+  # ALLOW_ACL_EDIT: true
+  # ALLOW_PRODUCER_EDIT: true
+  # ALLOW_QUOTA_EDIT: true
+  # ALLOW_SCHEMA_CREATE: true
+  # ALLOW_SCHEMA_EDIT: true
+  # ALLOW_CONNECT_CREATE: true
+  # ALLOW_CONNECT_EDIT: true
+  # ALLOW_CONNECT_INSPECT: true
+  # ALLOW_BULK_ACTION: true
+  # ALLOW_KSQLDB_QUERY: true
+  # ALLOW_KSQLDB_EXECUTE: true
+  # ALLOW_KSQLDB_TERMINATE_QUERY: true
+  # ALLOW_KSQLDB_INSERT: true
 
   ## Data Policy (Masking / Redaction) Configuration
 
@@ -139,7 +161,25 @@ data:
 
   # SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/..."
 
-  ## Okta SSO (OpenID)
+  ## OpenID Connect (Generic) - https://docs.factorhouse.io/kpow-ee/authentication/openid/generic/
+
+  # AUTH_PROVIDER_TYPE: "openid"
+  # OPENID_ACCESS_TOKEN_URI: "http://localhost:8080/realms/master/protocol/openid-connect/token"
+  # OPENID_AUTH_URI: "http://localhost:8080/realms/master/protocol/openid-connect/auth"
+  # OPENID_CLIENT_ID: "my-client"
+  # OPENID_CLIENT_SECRET: "aS50emK11A02i5lZovcBFu5MXWf93zeu"
+  # OPENID_SCOPES: "email,roles"
+  # OPENID_USER_FIELD: "sub" # Optional, defines which field in the access token maps to a user's name (default: sub)
+
+  ## SAML SSO - https://docs.factorhouse.io/kpow-ee/authentication/saml/
+
+  # AUTH_PROVIDER_TYPE: "saml"
+  # SAML_RELYING_PARTY_IDENTIFIER: "kpow.io"
+  # SAML_ACS_URL: "https://kpow.corp.com/saml"
+  # SAML_METADATA_FILE: "/opt/kpow/aws-metadata.xml"
+  # SAML_CERT: "/var/certs/saml-cert.cer"
+
+  ## Okta SSO (OpenID) - https://docs.factorhouse.io/kpow-ee/authentication/openid/okta/
 
   # AUTH_PROVIDER_TYPE: "okta"
   # OKTA_ORGANISATION: "your-organisation"
@@ -147,7 +187,7 @@ data:
   # OPENID_CLIENT_SECRET: "The 'Client Secret' found in the "Client Credentials" section of your Okta integration"
   # OPENID_LANDING_URI: "https://staging.kpow.z-corp.com"
 
-  ## Github SSO (OpenID)
+  ## Github SSO (OpenID) - https://docs.factorhouse.io/kpow-ee/authentication/openid/github/
 
   # AUTH_PROVIDER_TYPE: "github"
   # OPENID_TOKEN_URI: "https://github.com/login/oauth/access_token" or "[GHE Server URL]/login/oauth/access_token"
@@ -156,11 +196,3 @@ data:
   # OPENID_CLIENT_ID: "The 'Client ID' found in your configured Github Oath App"
   # OPENID_CLIENT_SECRET: "The 'Client Secret' found in your configured Github Oath App"
   # OPENID_LANDING_URI: "https://staging.kpow.z-corp.com/"
-
-  ## SAML SSO
-
-  # AUTH_PROVIDER_TYPE: "saml"
-  # SAML_RELYING_PARTY_IDENTIFIER: "kpow.io"
-  # SAML_ACS_URL: "https://kpow.corp.com/saml"
-  # SAML_METADATA_FILE: "/opt/kpow/aws-metadata.xml"
-  # SAML_CERT: "/var/certs/saml-cert.cer"

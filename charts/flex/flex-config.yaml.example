@@ -83,7 +83,6 @@ data:
   # OPENID_SCOPES: "email,roles"
   # OPENID_USER_FIELD: "sub" # Optional, defines which field in the access token maps to a user's name (default: sub)
 
-
   ## SAML SSO - https://docs.factorhouse.io/flex-ee/authentication/saml/
 
   # AUTH_PROVIDER_TYPE: "saml"
