@@ -6,7 +6,7 @@ data:
 
   ### See https://docs.factorhouse.io/flex-ee/introduction/ for full configuration and installation guides
 
-  ### Note: The simplest Flex configuration requires only LICENSE_* and BOOTSTRAP.
+  ### Note: The simplest Flex configuration requires only LICENSE_* and FLINK_REST_URL.
 
   ### License Configuration (https://factorhouse.io/flex/get-started/ <- 30 day trial licenses available)
 

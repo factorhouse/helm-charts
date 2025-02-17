@@ -4,7 +4,7 @@ metadata:
   name: kpow-config
 data:
 
-  ### See https://docs.kpow.io for full configuration and installation guides
+  ### See https://docs.factorhouse.io/kpow-ee/ for full configuration and installation guides
 
   ### Note: The simplest Kpow configuration requires only LICENSE_* and BOOTSTRAP.
 
