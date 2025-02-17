@@ -9,7 +9,7 @@ data:
   ### Note: The simplest Flex configuration requires only LICENSE_* and FLINK_REST_URL.
   ###       *** Configuration is optional. If no configuration is provided Flex will boot up into a wizard ***
 
-  ### License Configuration (https://factorhouse.io/flex/get-started/ <- 30 day trial licenses available)
+  ### License Configuration (https://factorhouse.io/flex/community/ <- free community licenses available)
 
   LICENSE_ID: "replace-me"
   LICENSE_CODE: "replace-me"
@@ -20,7 +20,7 @@ data:
   ### Resource Set Configuration
 
   ### Flex manages sets of Flink resources.
-  ### To configure multiple Flink resources prepend environment variables with _2, _3, etc.
+  ### Note: the community edition allows you to manage only a single cluster + single resource set.
 
   ## Optional Resource Set Name (this is displayed in the Flex UI for each set of resources)
 
