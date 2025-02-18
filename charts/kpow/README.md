@@ -6,24 +6,27 @@ This Helm chart uses the [factorhouse/kpow](https://hub.docker.com/r/factorhouse
 
 # Helm Charts
 
-This repository contains a single Helm chart that uses the [factorhouse/kpow](https://hub.docker.com/r/factorhouse/kpow) container on Dockerhub.
+This repository contains a single Helm chart that uses the [factorhouse/kpow](https://hub.docker.com/r/factorhouse/kpow)
+container on Dockerhub.
 
 * [Prerequisites](#prerequisites)
 * [Kubernetes](#kubernetes)
 * [Run Kpow in Kubernetes](#run-kpow-in-kubernetes)
-  * [Configure the Kpow Helm Repository](#configure-the-kpow-helm-repository)
-  * [Start a Kpow Instance](#start-a-kpow-instance)
-  * [Manage a Kpow Instance](#manage-a-kpow-instance)
-  * [Start Kpow with Local Changes](#start-kpow-with-local-changes)
-  * [Manage Sensitive Environment Variables](#manage-sensitive-environment-variables)
-  * [Provide Files to the Kpow Pod](#provide-files-to-the-kpow-pod)
-  * [Kpow Memory and CPU Requirements](#kpow-memory-and-cpu-requirements)
+    * [Configure the Kpow Helm Repository](#configure-the-kpow-helm-repository)
+    * [Start a Kpow Instance](#start-a-kpow-instance)
+    * [Manage a Kpow Instance](#manage-a-kpow-instance)
+    * [Start Kpow with Local Changes](#start-kpow-with-local-changes)
+    * [Manage Sensitive Environment Variables](#manage-sensitive-environment-variables)
+    * [Provide Files to the Kpow Pod](#provide-files-to-the-kpow-pod)
+    * [Kpow Memory and CPU Requirements](#kpow-memory-and-cpu-requirements)
 
 ## Prerequisites
 
-To run the Dockerhub container requires a license. Start a [free 30-day trial](https://kpow.io/try) of Kpow today.
+To run the Dockerhub container requires a license. Start a [free 30-day trial](https://factorhouse.io/kpow/get-started/)
+of Kpow today.
 
-See [Kpow on the AWS Marketplace](https://docs.kpow.io/installation/aws-marketplace) to have Kpow billed automatically to your AWS account, no license required.
+See [Kpow on the AWS Marketplace](https://docs.kpow.io/installation/aws-marketplace) to have Kpow billed automatically
+to your AWS account, no license required.
 
 ## Kubernetes
 
@@ -71,7 +74,7 @@ The minimum information required by Kpow to operate is:
 * License Details
 * Kafka Bootstrap URL
 
-See the [Kpow Documentation](https://docs.kpow.io) for a full list of configuration options.
+See the [Kpow Documentation](https://docs.factorhouse.io/kpow-ee) for a full list of configuration options.
 
 #### Start Kpow with config from '--set env.XYZ'
 
@@ -90,7 +93,7 @@ https://helm.sh/docs/intro/using_helm/#the-format-and-limitations-of-set
 Use the following to install from command line:
 
 ```bash
-helm install --namespace factorhouse --create-namespace kpow kpow/kpow \
+helm install --namespace factorhouse --create-namespace kpow factorhouse/kpow \
   --set env.LICENSE_ID="00000000-0000-0000-0000-000000000001" \
   --set env.LICENSE_CODE="KPOW_CREDIT" \
   --set env.LICENSEE="Factor House\, Inc." \ <-- note the quoted comma
@@ -119,14 +122,17 @@ NOTES:
 You can configure Kpow with a ConfigMap of environment variables as follows:
 
 ```bash
-helm install --namespace factorhouse --create-namespace kpow kpow/kpow --set envFromConfigMap=kpow-config
+helm install --namespace factorhouse --create-namespace kpow factorhouse/kpow --set envFromConfigMap=kpow-config
 ```
 
-This approach expects a ConfigMap to be available within the factorhouse namespace in kube, to understand how to configure Kpow with a local ConfigMap template see [Start Kpow with Local Changes](#start-kpow-with-local-changes).
+This approach expects a ConfigMap to be available within the factorhouse namespace in kube, to understand how to
+configure Kpow with a local ConfigMap template see [Start Kpow with Local Changes](#start-kpow-with-local-changes).
 
 See [kpow-config.yaml.example](./kpow-config.yaml.example) for an example ConfigMapfile.
 
-See the Kubernetes documentation on [configuring all key value pairs in a config map as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) for more information.
+See the Kubernetes documentation
+on [configuring all key value pairs in a config map as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables)
+for more information.
 
 ### Manage a Kpow Instance
 
@@ -181,7 +187,7 @@ You can run Kpow with local edits to these charts and provide local configuratio
 #### Pull and Untar the Kpow Charts
 
 ```bash
-helm pull kpow/kpow --untar --untardir .
+helm pull factorhouse/kpow --untar --untardir .
 ```
 
 #### Make Local Edits
@@ -190,7 +196,7 @@ Make any edits required to `kpow/Chart.yaml` or `kpow/values.yaml` (adding volum
 
 #### Run Local Charts
 
-The command to run local charts is slightly different, see `./kpow` rather than `kpow/kpow`.
+The command to run local charts is slightly different, see `./kpow` rather than `factorhouse/kpow`.
 
 ```bash
 helm install --namespace factorhouse --create-namespace kpow ./kpow <.. --set configuration, etc ..>
@@ -208,7 +214,9 @@ helm install --namespace factorhouse --create-namespace kpow ./kpow --set envFro
 
 See [kpow-config.yaml.example](./kpow-config.yaml.example) for an example ConfigMap file.
 
-See the Kubernetes documentation on [configuring all key value pairs in a config map as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) for more information.
+See the Kubernetes documentation
+on [configuring all key value pairs in a config map as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables)
+for more information.
 
 ### Manage Sensitive Environment Variables
 
@@ -230,7 +238,9 @@ kubectl apply -f ./kpow-secrets.yaml --namespace factorhouse
 
 Then run the helm chart (this can be used in conjunction with `envFromConfigMap`)
 
-See the Kubernetes documentation on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables) for more information.
+See the Kubernetes documentation
+on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
+for more information.
 
 ```bash
 helm install --namespace factorhouse --create-namespace kpow ./kpow --set envFromSecret=kpow-secrets --set envFromConfigMap=kpow-config
@@ -244,9 +254,12 @@ There are occasions where you must provide files to the Kpow Pod in order for Kp
 * SSL Keystores
 * SSL Truststores
 
-How you provide these files is down to user preference, we are not able to provide any support or instruction in this regard.
+How you provide these files is down to user preference, we are not able to provide any support or instruction in this
+regard.
 
-You may find the Kubernetes documentation on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) useful.
+You may find the Kubernetes documentation
+on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume)
+useful.
 
 ### Kpow Memory and CPU Requirements
 
@@ -262,9 +275,11 @@ resources:
     memory: 8Gi
 ```
 
-These default resource settings are conservative, suited to a deployment of Kpow that manages multiple Kafka clusters and associated resources.
+These default resource settings are conservative, suited to a deployment of Kpow that manages multiple Kafka clusters
+and associated resources.
 
-When running Kpow with a single Kafka cluster you can experiment with reducing those resources as far as our suggested minimum:
+When running Kpow with a single Kafka cluster you can experiment with reducing those resources as far as our suggested
+minimum:
 
 #### Minimum Resource Requirements
 
@@ -281,14 +296,15 @@ resources:
 Adjust these values from the command line like so:
 
 ```bash
-helm install --namespace factorhouse --create-namespace kpow kpow/kpow \
+helm install --namespace factorhouse --create-namespace kpow factorhouse/kpow \
      --set resources.limits.cpu=1 \
      --set resources.limits.memory=2Gi \
      --set resources.requests.cpu=1 \
      --set resources.requests.memory=2Gi
 ```
 
-We recommend always having limits and requests set to the same value, as this set Kpow in Guaranteed QoS and provides a much more reliable operation.
+We recommend always having limits and requests set to the same value, as this set Kpow in Guaranteed QoS and provides a
+much more reliable operation.
 
 ### Get Help!
 
