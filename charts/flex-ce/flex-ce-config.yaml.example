@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flex-ce-config
+data:
+
+  ### See https://docs.factorhouse.io/flex-ce/ for full configuration and installation guides
+
+  ### Note: The simplest Flex configuration requires only LICENSE_* and FLINK_REST_URL.
+  ###       *** Configuration is optional. If no configuration is provided Flex will boot up into a wizard ***
+
+  ### License Configuration (https://factorhouse.io/flex/community/ <- free community licenses available)
+
+  LICENSE_ID: "replace-me"
+  LICENSE_CODE: "replace-me"
+  LICENSEE: "replace-me"
+  LICENSE_EXPIRY: "replace-me"
+  LICENSE_SIGNATURE: "replace-me"
+
+  ### Resource Set Configuration
+
+  ### Flex manages sets of Flink resources.
+  ### Note: the community edition allows you to manage only a single cluster + single resource set.
+
+  ## Optional Resource Set Name (this is displayed in the Flex UI for each set of resources)
+
+  ENVIRONMENT_NAME: "Change Me"
+
+  ## Flink Cluster Configuration
+  ## Required parameters for configuring a Flink Cluster
+  ## You must configure at least one Flink Rest URL to use Flex.
+
+  FLINK_REST_URL: "replace-with-your-flink-rest-url"
+
+  ## Optional Kafka Cluster Configuration
+
+  # FLINK_TIMEOUT_MS: "30000"
+  # FLINK_PERMISSIVE_SSL: "false"

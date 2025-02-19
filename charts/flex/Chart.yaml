@@ -1,19 +1,16 @@
 apiVersion: v2
-name: kpow
-description: Run Kpow for Apache Kafka in Kubernetes
+name: flex
+description: Run Flex for Apache Flink in Kubernetes
 type: application
 version: 1.0.58
 appVersion: "94.1"
 keywords:
-  - kafka
-  - kafka-ui
-  - kafka-connect
-  - schema-registry
-  - ksqldb
+  - flink
+  - flink-ui
   - monitoring
-home: "https://factorhouse.io/kpow"
+home: "https://factorhouse.io/flex"
 sources:
-  - "https://github.com/factorhouse/kpow"
+  - "https://github.com/factorhouse/flex"
   - "https://github.com/factorhouse/helm-charts/"
 maintainers:
   - name: "Factor House Support"

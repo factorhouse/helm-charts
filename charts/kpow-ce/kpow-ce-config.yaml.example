@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kpow-ce-config
+data:
+
+  ### See https://docs.factorhouse.io/kpow-ce/ for full configuration and installation guides
+
+  ### Note: The simplest Kpow configuration requires only LICENSE_* and BOOTSTRAP.
+  ###       *** Configuration is optional. If no configuration is provided Kpow will boot up into a wizard ***
+
+  ### License Configuration (https://factorhouse.io/kpow/community/ <- free community licenses available)
+
+  LICENSE_ID: "replace-me"
+  LICENSE_CODE: "replace-me"
+  LICENSEE: "replace-me"
+  LICENSE_EXPIRY: "replace-me"
+  LICENSE_SIGNATURE: "replace-me"
+
+  ### Resource Set Configuration
+
+  ### Kpow manages sets of Kafka resources. Clusters, Schema Registries and Kafka Connect Installations.
+  ### Note: the community edition allows you to manage only a single cluster + single resource set.
+
+  ## Optional Resource Set Name (this is displayed in the Kpow UI for each set of resources)
+
+  ENVIRONMENT_NAME: "Change Me"
+
+  ## Kafka Cluster Configuration
+  ## Required parameters for configuring a Kafka Cluster
+  ## You must configure at least one Kafka Booktstrap to use Kpow.
+
+  BOOTSTRAP: "replace-with-your-bootstrap-url"
+
+  ## Optional Kafka Cluster Configuration
+
+  # SECURITY_PROTOCOL: "SASL_SSL"
+  # SASL_MECHANISM: "PLAIN"
+  # SASL_JAAS_CONFIG: "org.apache.kafka.common.security.plain.Plain.."
+  # SASL_LOGIN_CALLBACK_HANDLER_CLASS: "com.corp.kafka.security.sasl.oauth.KafkaBrokerTokenCreator"
+  # SSL_KEYSTORE_LOCATION: "/ssl/kafka.keystore.jks"
+  # SSL_KEYSTORE_PASSWORD: "keystore-pass-123"
+  # SSL_KEY_PASSWORD: "key-pass-123"
+  # SSL_KEYSTORE_TYPE: "JKS"
+  # SSL_KEYMANAGER_ALGORITHM: "SunX509"
+  # SSL_TRUSTSTORE_LOCATION: "/ssl/kafka.truststore.jks"
+  # SSL_TRUSTSTORE_PASSWORD: "trust-pass-123"
+  # SSL_TRUSTSTORE_TYPE: "JKS"
+  # SSL_TRUSTMANAGER_ALGORITHM: "PKIX"
+  # SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: "https"
+  # SSL_PROVIDER: "default"
+  # SSL_CIPHER_SUITES: "default"
+  # SSL_PROTOCOL: "TLS"
+  # SSL_ENABLED_PROTOCOLS: "TLSv.12,TLSv1.1,TLSv1"
+  # SSL_SECURE_RANDOM_IMPLEMENTATION: "SHA1PRNG"
+
+  ## Schema Registry Configuration
+
+  # SCHEMA_REGISTRY_URL: "https://registry-host"
+  # SCHEMA_REGISTRY_AUTH: "USER_INFO"
+  # SCHEMA_REGISTRY_USER: "registry-user"
+  # SCHEMA_REGISTRY_PASSWORD: "registry-pass"
+  # SCHEMA_REGISTRY_NAME: "registry-label" (optional)
+
+  ## Kafka Connect Configuration
+
+  # CONNECT_REST_URL: "http://localhost:8083"
+  # CONNECT_AUTH: "BASIC" (optional)
+  # CONNECT_BASIC_AUTH_USER: "connect-user" (optional)
+  # CONNECT_BASIC_AUTH_PASS: "connect-pass" (optional)
+  # CONNECT_GROUP_ID: "connect-group-id" (optional)
+  # CONNECT_OFFSET_STORAGE_TOPIC: "connect-topic" (optional)

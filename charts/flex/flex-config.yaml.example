@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flex-config
+data:
+
+  ### See https://docs.factorhouse.io/flex-ee/introduction/ for full configuration and installation guides
+
+  ### Note: The simplest Flex configuration requires only LICENSE_* and FLINK_REST_URL.
+
+  ### License Configuration (https://factorhouse.io/flex/get-started/ <- 30 day trial licenses available)
+
+  LICENSE_ID: "replace-me"
+  LICENSE_CODE: "replace-me"
+  LICENSEE: "replace-me"
+  LICENSE_EXPIRY: "replace-me"
+  LICENSE_SIGNATURE: "replace-me"
+
+  ### Resource Set Configuration
+
+  ### Flex manages sets of Flink resources.
+  ### To configure multiple Flink resources prepend environment variables with _2, _3, etc.
+
+  ## Optional Resource Set Name (this is displayed in the Flex UI for each set of resources)
+
+  ENVIRONMENT_NAME: "Change Me"
+
+  ## Flink Cluster Configuration
+  ## Required parameters for configuring a Flink Cluster
+  ## You must configure at least one Flink Rest URL to use Flex.
+
+  FLINK_REST_URL: "replace-with-your-flink-rest-url"
+
+  ## Optional Kafka Cluster Configuration
+
+  # FLINK_TIMEOUT_MS: "30000"
+  # FLINK_PERMISSIVE_SSL: "false"
+
+  ### System Configuration
+
+  # PORT: "3000" - the port to serve content
+
+  ## System HTTPS Configuration
+
+  # ENABLE_HTTPS: "true"
+  # HTTPS_KEYSTORE_LOCATION: "/ssl/https.keystore.jks"
+  # HTTPS_KEYSTORE_TYPE: "JKS"
+  # HTTPS_KEYSTORE_PASSWORD: "ssl-key-pass"
+  # HTTPS_TRUSTSTORE_LOCATION: "/ssl/https.truststore.jks"
+  # HTTPS_TRUSTSTORE_TYPE: "JKS"
+  # HTTPS_TRUSTSTORE_PASSWORD: "ssl-trust-pass"
+
+  ## Prometheus Endpoints
+
+  # PROMETHEUS_EGRESS: "true"
+
+  ### User Authentication and Authorization
+
+  ## RBAC Configuration (requires SSO provider configured, e.g. Okta, Github, Azure AD, AWS SSO, SAML, etc.)
+
+  # RBAC_CONFIGURATION_FILE: /opt/flex/rbac-config.yaml
+
+  ## Global Access Controls Configuration (default to false, apply to all users, overriden if you configure RBAC)
+
+  # ALLOW_FLINK_SUBMIT: "true"
+  # ALLOW_FLINK_JAR_DELETE: "true"
+  # ALLOW_FLINK_JOB_TERMINATE: "true"
+  # ALLOW_FLINK_JOB_EDIT: "true"
+
+  ## Slack Integration (Send Audit Log records to a Slack channel)
+
+  # SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/..."
+
+  # Authentication
+
+  ## OpenID Connect (Generic) - https://docs.factorhouse.io/flex-ee/authentication/openid/generic/
+
+  # AUTH_PROVIDER_TYPE: "openid"
+  # OPENID_ACCESS_TOKEN_URI: "http://localhost:8080/realms/master/protocol/openid-connect/token"
+  # OPENID_AUTH_URI: "http://localhost:8080/realms/master/protocol/openid-connect/auth"
+  # OPENID_CLIENT_ID: "my-client"
+  # OPENID_CLIENT_SECRET: "aS50emK11A02i5lZovcBFu5MXWf93zeu"
+  # OPENID_SCOPES: "email,roles"
+  # OPENID_USER_FIELD: "sub" # Optional, defines which field in the access token maps to a user's name (default: sub)
+
+  ## SAML SSO - https://docs.factorhouse.io/flex-ee/authentication/saml/
+
+  # AUTH_PROVIDER_TYPE: "saml"
+  # SAML_RELYING_PARTY_IDENTIFIER: "flex.io"
+  # SAML_ACS_URL: "https://flex.corp.com/saml"
+  # SAML_METADATA_FILE: "/opt/flex/aws-metadata.xml"
+  # SAML_CERT: "/var/certs/saml-cert.cer"
+
+  ## Okta SSO (OpenID) - https://docs.factorhouse.io/flex-ee/authentication/openid/okta/
+
+  # AUTH_PROVIDER_TYPE: "okta"
+  # OKTA_ORGANISATION: "your-organisation"
+  # OPENID_CLIENT_ID: "The 'Client ID' found in the "Client Credentials" section of your Okta integration"
+  # OPENID_CLIENT_SECRET: "The 'Client Secret' found in the "Client Credentials" section of your Okta integration"
+  # OPENID_LANDING_URI: "https://staging.flex.z-corp.com"
+
+  ## Github SSO (OpenID) - https://docs.factorhouse.io/flex-ee/authentication/openid/github/
+
+  # AUTH_PROVIDER_TYPE: "github"
+  # OPENID_TOKEN_URI: "https://github.com/login/oauth/access_token" or "[GHE Server URL]/login/oauth/access_token"
+  # OPENID_AUTH_URI: "https://github.com/login/oauth/authorize" or "[GHE Server URL]/login/oauth/authorize"
+  # OPENID_API_URI: "https://api.github.com/user" or, "[GHE Server URL]/api/v3/user"
+  # OPENID_CLIENT_ID: "The 'Client ID' found in your configured Github Oath App"
+  # OPENID_CLIENT_SECRET: "The 'Client Secret' found in your configured Github Oath App"
+  # OPENID_LANDING_URI: "https://staging.flex.z-corp.com/"
