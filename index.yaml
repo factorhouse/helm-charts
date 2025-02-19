@@ -1,0 +1,97 @@
+apiVersion: v1
+entries:
+  flex:
+  - apiVersion: v2
+    appVersion: "94.1"
+    created: "2025-02-19T23:16:24.13147302Z"
+    description: Run Flex for Apache Flink in Kubernetes
+    digest: 1e46d7bbeef7942887a612f612bb8ee9439dbcd4cdb32b21388e06bc10063bc2
+    home: https://factorhouse.io/flex
+    keywords:
+    - flink
+    - flink-ui
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: flex
+    sources:
+    - https://github.com/factorhouse/flex
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/flex-1.0.58/flex-1.0.58.tgz
+    version: 1.0.58
+  flex-ce:
+  - apiVersion: v2
+    appVersion: "94.1"
+    created: "2025-02-19T23:16:24.405622342Z"
+    description: Run Flex for Apache Flink Community Edition in Kubernetes
+    digest: 3c78928387bb706b4b6b745d6aedb7dcbee4e5202aa47503cdca1d4f27df1d0a
+    home: https://factorhouse.io/flex/community
+    keywords:
+    - flink
+    - flink-ui
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: flex-ce
+    sources:
+    - https://github.com/factorhouse/flex
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/flex-ce-1.0.58/flex-ce-1.0.58.tgz
+    version: 1.0.58
+  kpow:
+  - apiVersion: v2
+    appVersion: "94.1"
+    created: "2025-02-19T23:16:24.586470604Z"
+    description: Run Kpow for Apache Kafka in Kubernetes
+    digest: 60b612d128054a2b3dc2b8d6f20dcbd0dc43f9ab17bd715aabc9b3d8c4217488
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-1.0.58/kpow-1.0.58.tgz
+    version: 1.0.58
+  kpow-ce:
+  - apiVersion: v2
+    appVersion: "94.1"
+    created: "2025-02-19T23:16:24.76888515Z"
+    description: Run Kpow for Apache Kafka Community Edition in Kubernetes
+    digest: 671957177fd6de3b949910617d204366152e7f78d89bb2fc5e4d2ac8b5e8155a
+    home: https://factorhouse.io/kpow/community
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-ce
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.58/kpow-ce-1.0.58.tgz
+    version: 1.0.58
+generated: "2025-02-19T23:16:24.768891492Z"
