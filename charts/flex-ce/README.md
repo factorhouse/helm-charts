@@ -1,4 +1,4 @@
-# Run Flex Community Edition for Apache Kafka in Kubernetes
+# Run Flex Community Edition for Apache Flink in Kubernetes
 
 [Flex Community Edition](https://factorhouse.io/flex) is a free, developer focused toolkit for Apache Flink.
 
