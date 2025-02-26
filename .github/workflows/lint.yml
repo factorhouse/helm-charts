@@ -1,0 +1,10 @@
+name: lint
+
+on: [push]
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: helm lint charts/*
