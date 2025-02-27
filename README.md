@@ -1,7 +1,7 @@
 # Factor House Helm Charts
 
 [![Release Charts](https://github.com/factorhouse/helm-charts/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/factorhouse/helm-charts/actions/workflows/release.yml)
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/factorhouse)](https://artifacthub.io/packages/search?repo=factorhouse)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/factorhouse)](https://artifacthub.io/packages/search?org=factorhouse)
 
 Official Helm Charts for Factor House products. Currently supported:
 
