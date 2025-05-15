@@ -56,9 +56,15 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
-          {{- with .Values.volumeMounts }}
+          {{- if or .Values.volumeMounts .Values.ephemeralTmp.enabled }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+            {{- if .Values.volumeMounts }}
+              {{- toYaml .Values.volumeMounts | nindent 12 }}
+            {{- end }}
+            {{- if .Values.ephemeralTmp.enabled }}
+            - name: {{ .Values.ephemeralTmp.volumeMount.name | quote }}
+              mountPath: {{ .Values.ephemeralTmp.volumeMount.mountPath | quote }}
+            {{- end }}
           {{- end }}
           readinessProbe:
             httpGet:
@@ -86,7 +92,19 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.volumes }}
+      {{- if or .Values.volumes .Values.ephemeralTmp.enabled }}
       volumes:
-        {{- toYaml . | nindent 8 }}
+        {{- if .Values.volumes }}
+          {{- toYaml .Values.volumes | nindent 8 }}
+        {{- end }}
+        {{- if .Values.ephemeralTmp.enabled }}
+        - name: {{ .Values.ephemeralTmp.volumeMount.name | quote }}
+          {{- /* Check if emptyDir config exists, otherwise provide a default empty one */}}
+          {{- if .Values.ephemeralTmp.volume.emptyDir }}
+          emptyDir:
+            {{- toYaml .Values.ephemeralTmp.volume.emptyDir | nindent 12 }}
+          {{- else }}
+          emptyDir: {} # Default emptyDir if no specific config
+          {{- end }}
+        {{- end }}
       {{- end }}
