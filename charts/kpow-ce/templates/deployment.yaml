@@ -56,7 +56,7 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
-          {{- if or .Values.volumeMounts (and .Values.snappyTmp .Values.snappyTmp.enabled) }}
+          {{- if or .Values.volumeMounts .Values.snappyTmp.enabled }}
           volumeMounts:
             {{- if .Values.volumeMounts }}
               {{- toYaml .Values.volumeMounts | nindent 12 }}
@@ -92,7 +92,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.volumes (and .Values.snappyTmp .Values.snappyTmp.enabled) }}
+      {{- if or .Values.volumes .Values.snappyTmp.enabled }}
       volumes:
         {{- if .Values.volumes }}
           {{- toYaml .Values.volumes | nindent 8 }}

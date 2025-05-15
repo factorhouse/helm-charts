@@ -20,6 +20,16 @@ volumes: []
 #   configMap:
 #     name: "my-kpow-ce-config"
 
+snappyTmp:
+  enabled: false # Sets up an emptyDir volume mount for Snappy compression. Enable this if you use Snappy compression and you have readOnly filesystem Pod policies.
+  volumeMount:
+    name: "snappy-tmp"
+    mountPath: "/opt/snappy-tmp"
+  volume:
+    emptyDir:
+      medium: Memory # Optional: for better performance
+      sizeLimit: "100Mi" # Configurable size
+
 serviceAccount:
   create: true
   annotations: {}
