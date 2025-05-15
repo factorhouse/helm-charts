@@ -92,7 +92,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.volumes }}
+      {{- if or .Values.volumes (and .Values.snappyTmp .Values.snappyTmp.enabled) }}
       volumes:
         {{- if .Values.volumes }}
           {{- toYaml .Values.volumes | nindent 8 }}
