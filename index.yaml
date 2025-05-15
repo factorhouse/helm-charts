@@ -2,6 +2,27 @@ apiVersion: v1
 entries:
   flex:
   - apiVersion: v2
+    appVersion: "94.2"
+    created: "2025-05-15T13:02:18.648838007Z"
+    description: Run Flex for Apache Flink in Kubernetes
+    digest: 245c3aa3ad0cd1bb1a776694e9006ec95a7e76e495993f156a53892496efb9e9
+    home: https://factorhouse.io/flex
+    keywords:
+    - flink
+    - flink-ui
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: flex
+    sources:
+    - https://github.com/factorhouse/flex
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/flex-1.0.60/flex-1.0.60.tgz
+    version: 1.0.60
+  - apiVersion: v2
     appVersion: "94.1"
     created: "2025-02-27T04:51:17.375680142Z"
     description: Run Flex for Apache Flink in Kubernetes
@@ -45,6 +66,27 @@ entries:
     version: 1.0.58
   flex-ce:
   - apiVersion: v2
+    appVersion: "94.2"
+    created: "2025-05-15T13:02:18.771006644Z"
+    description: Run Flex for Apache Flink Community Edition in Kubernetes
+    digest: c5cd34fd6592bbb921fb70fa1bd94c84bf04620c1a36cb4a4f5d8644b86f4a95
+    home: https://factorhouse.io/flex/community
+    keywords:
+    - flink
+    - flink-ui
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: flex-ce
+    sources:
+    - https://github.com/factorhouse/flex
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/flex-ce-1.0.60/flex-ce-1.0.60.tgz
+    version: 1.0.60
+  - apiVersion: v2
     appVersion: "94.1"
     created: "2025-02-27T04:51:17.543769871Z"
     description: Run Flex for Apache Flink Community Edition in Kubernetes
@@ -87,6 +129,30 @@ entries:
     - https://github.com/factorhouse/helm-charts/releases/download/flex-ce-1.0.58/flex-ce-1.0.58.tgz
     version: 1.0.58
   kpow:
+  - apiVersion: v2
+    appVersion: "94.2"
+    created: "2025-05-15T13:02:18.903667328Z"
+    description: Run Kpow for Apache Kafka in Kubernetes
+    digest: eedae039c521018f2a93a2d1bc566a29ed3f0e81294ed8faca592a68ac4321d0
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-1.0.60/kpow-1.0.60.tgz
+    version: 1.0.60
   - apiVersion: v2
     appVersion: "94.1"
     created: "2025-02-27T04:51:17.727018571Z"
@@ -137,6 +203,30 @@ entries:
     version: 1.0.58
   kpow-ce:
   - apiVersion: v2
+    appVersion: "94.2"
+    created: "2025-05-15T13:02:19.055405713Z"
+    description: Run Kpow for Apache Kafka Community Edition in Kubernetes
+    digest: 56c5cbe0d5b25b67fc6641a71bca37510faa4f14850ef0db8d2390f35be1e540
+    home: https://factorhouse.io/kpow/community
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-ce
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.60/kpow-ce-1.0.60.tgz
+    version: 1.0.60
+  - apiVersion: v2
     appVersion: "94.1"
     created: "2025-02-27T04:51:17.932965749Z"
     description: Run Kpow for Apache Kafka Community Edition in Kubernetes
@@ -184,4 +274,4 @@ entries:
     urls:
     - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.58/kpow-ce-1.0.58.tgz
     version: 1.0.58
-generated: "2025-02-27T04:51:17.932991758Z"
+generated: "2025-05-15T13:02:19.055475544Z"
