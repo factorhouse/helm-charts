@@ -58,7 +58,13 @@ spec:
               protocol: TCP
           {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+            {{- if .Values.volumeMounts }}
+              {{- toYaml .Values.volumeMounts | nindent 12 }}
+            {{- end }}
+            {{- if .Values.snappyTmp.enabled }}
+            - name: {{ .Values.snappyTmp.volumeMount.name | quote }}
+              mountPath: {{ .Values.snappyTmp.volumeMount.mountPath | quote }}
+            {{- end }}
           {{- end }}
           readinessProbe:
             httpGet:
@@ -88,5 +94,17 @@ spec:
       {{- end }}
       {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
+        {{- if .Values.volumes }}
+          {{- toYaml .Values.volumes | nindent 8 }}
+        {{- end }}
+        {{- if .Values.snappyTmp.enabled }}
+        - name: {{ .Values.snappyTmp.volumeMount.name | quote }}
+          {{- /* Check if emptyDir config exists, otherwise provide a default empty one */}}
+          {{- if .Values.snappyTmp.volume.emptyDir }}
+          emptyDir:
+            {{- toYaml .Values.snappyTmp.volume.emptyDir | nindent 12 }}
+          {{- else }}
+          emptyDir: {} # Default emptyDir if no specific config
+          {{- end }}
+        {{- end }}
       {{- end }}
