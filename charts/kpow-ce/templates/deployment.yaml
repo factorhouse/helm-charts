@@ -56,14 +56,14 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
-          {{- if or .Values.volumeMounts .Values.snappyTmp.enabled }}
+          {{- if or .Values.volumeMounts .Values.ephemeralTmp.enabled }}
           volumeMounts:
             {{- if .Values.volumeMounts }}
               {{- toYaml .Values.volumeMounts | nindent 12 }}
             {{- end }}
-            {{- if .Values.snappyTmp.enabled }}
-            - name: {{ .Values.snappyTmp.volumeMount.name | quote }}
-              mountPath: {{ .Values.snappyTmp.volumeMount.mountPath | quote }}
+            {{- if .Values.ephemeralTmp.enabled }}
+            - name: {{ .Values.ephemeralTmp.volumeMount.name | quote }}
+              mountPath: {{ .Values.ephemeralTmp.volumeMount.mountPath | quote }}
             {{- end }}
           {{- end }}
           readinessProbe:
@@ -92,17 +92,17 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.volumes .Values.snappyTmp.enabled }}
+      {{- if or .Values.volumes .Values.ephemeralTmp.enabled }}
       volumes:
         {{- if .Values.volumes }}
           {{- toYaml .Values.volumes | nindent 8 }}
         {{- end }}
-        {{- if .Values.snappyTmp.enabled }}
-        - name: {{ .Values.snappyTmp.volumeMount.name | quote }}
+        {{- if .Values.ephemeralTmp.enabled }}
+        - name: {{ .Values.ephemeralTmp.volumeMount.name | quote }}
           {{- /* Check if emptyDir config exists, otherwise provide a default empty one */}}
-          {{- if .Values.snappyTmp.volume.emptyDir }}
+          {{- if .Values.ephemeralTmp.volume.emptyDir }}
           emptyDir:
-            {{- toYaml .Values.snappyTmp.volume.emptyDir | nindent 12 }}
+            {{- toYaml .Values.ephemeralTmp.volume.emptyDir | nindent 12 }}
           {{- else }}
           emptyDir: {} # Default emptyDir if no specific config
           {{- end }}

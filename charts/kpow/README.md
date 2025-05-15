@@ -309,11 +309,12 @@ much more reliable operation.
 
 #### Snappy compression in read-only filesystem
 
-We preset an attribute for Snappy compression in read-only filesystems. It is disabled by default and can be enabled - modify the volume configuration if necessary.
+We preset an attribute for Snappy compression in read-only filesystems. It is disabled by default and can be enabled -
+modify the volume configuration if necessary.
 
 ```yaml
-snappyTmp:
-  enabled: false # Set to true
+ephemeralTmp:
+  enabled: true
   volume:
     emptyDir:
       medium: Memory # Optional: for better performance

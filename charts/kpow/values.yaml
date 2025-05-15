@@ -4,27 +4,29 @@ image:
   repository: factorhouse/kpow
   pullPolicy: IfNotPresent
 
-imagePullSecrets: []
+imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""
 
-env: {}
+env: { }
 envFromConfigMap: null
 envFromSecret: null
-volumeMounts: []
+volumeMounts: [ ]
 # - name: rbac-config
 #   mountPath: /path/to/rbac-config.yaml
 #   subPath: rbac-config.yaml
-volumes: []
+volumes: [ ]
 # - name: rbac-config
 #   configMap:
 #     name: "my-kpow-config"
 
-snappyTmp:
-  enabled: false # Sets up an emptyDir volume mount for Snappy compression. Enable this if you use Snappy compression and you have readOnly filesystem Pod policies.
+ephemeralTmp:
+  # Sets up an emptyDir volume mount for Snappy compression and other features requiring /tmp access.
+  # Enable this if you use Snappy compression and you have readOnly filesystem Pod policies.
+  enabled: false
   volumeMount:
-    name: "snappy-tmp"
-    mountPath: "/opt/snappy-tmp"
+    name: "fh-tmp"
+    mountPath: "/opt/factorhouse/tmp"
   volume:
     emptyDir:
       medium: Memory # Optional: for better performance
@@ -32,26 +34,26 @@ snappyTmp:
 
 serviceAccount:
   create: true
-  annotations: {}
+  annotations: { }
   name: kpow
 
-podAnnotations: {}
+podAnnotations: { }
 
-podSecurityContext: {}
+podSecurityContext: { }
 
-securityContext: {}
+securityContext: { }
 
 service:
   enabled: true
-  annotations: {}
+  annotations: { }
   type: ClusterIP
   port: 3000
 
 ingress:
   enabled: false
-  annotations: {}
-  hosts: []
-  tls: []
+  annotations: { }
+  hosts: [ ]
+  tls: [ ]
   ingressClassName: ""
 
 # We recommend running Kpow w/ Guaranteed QOS
@@ -75,10 +77,10 @@ autoscaling:
   targetCPUUtilizationPercentage: 85
   targetMemoryUtilizationPercentage: 85
 
-nodeSelector: {}
+nodeSelector: { }
 
-tolerations: []
+tolerations: [ ]
 
-affinity: {}
+affinity: { }
 
-labels: {}
+labels: { }
