@@ -19,6 +19,7 @@ container on Dockerhub.
     * [Manage Sensitive Environment Variables](#manage-sensitive-environment-variables)
     * [Provide Files to the Kpow Pod](#provide-files-to-the-kpow-pod)
     * [Kpow Memory and CPU Requirements](#kpow-memory-and-cpu-requirements)
+    * [Snappy compression in read-only filesystem](#snappy-compression-in-read-only-filesystem)
 
 ## Prerequisites
 
@@ -305,6 +306,19 @@ helm install --namespace factorhouse --create-namespace kpow factorhouse/kpow \
 
 We recommend always having limits and requests set to the same value, as this set Kpow in Guaranteed QoS and provides a
 much more reliable operation.
+
+#### Snappy compression in read-only filesystem
+
+We preset an attribute for Snappy compression in read-only filesystems. It is disabled by default and can be enabled - modify the volume configuration if necessary.
+
+```yaml
+snappyTmp:
+  enabled: false # Set to true
+  volume:
+    emptyDir:
+      medium: Memory # Optional: for better performance
+      sizeLimit: "100Mi" # Configurable size
+```
 
 ### Get Help!
 
