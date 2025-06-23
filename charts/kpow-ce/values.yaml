@@ -46,6 +46,9 @@ securityContext:
   privileged: false
   runAsNonRoot: true
   runAsUser: 1001
+  capabilities:
+    drop:
+      - ALL
 
 service:
   enabled: true
