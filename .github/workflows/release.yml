@@ -23,13 +23,10 @@ jobs:
       - name: Prepare GPG Key
         run: |
           echo "# Import the GPG Key"
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
           
           echo "Create passphrase file"
-          echo "${{ secrets.GPG_PASSPHRASE }}"
-          echo "${{ secrets.GPG_PASSPHRASE }}" > passphrase.txt
-          echo "Read passphrase file"
-          cat passphrase.txt
+          echo "$GPG_PASSPHRASE" > passphrase.txt
           
           echo "Store the GPG key ID to a file"
           GPG_KEY_ID=$(gpg --list-secret-keys --with-colons | grep 'sec' | cut -d: -f5)
