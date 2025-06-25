@@ -3,6 +3,27 @@ entries:
   flex:
   - apiVersion: v2
     appVersion: "94.2"
+    created: "2025-06-25T22:54:00.39391291Z"
+    description: Run Flex for Apache Flink in Kubernetes
+    digest: 30644fed176306ad0783cd6988c5bf01437093d757e1dbb8f6ce9d4481f1c7dd
+    home: https://factorhouse.io/flex
+    keywords:
+    - flink
+    - flink-ui
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: flex
+    sources:
+    - https://github.com/factorhouse/flex
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/flex-1.0.63/flex-1.0.63.tgz
+    version: 1.0.63
+  - apiVersion: v2
+    appVersion: "94.2"
     created: "2025-06-25T02:57:47.992322514Z"
     description: Run Flex for Apache Flink in Kubernetes
     digest: 3b36e013a43fe23e15b422a3421629b964d8be20ed946c735f215afd52a403ab
@@ -109,6 +130,27 @@ entries:
   flex-ce:
   - apiVersion: v2
     appVersion: "94.2"
+    created: "2025-06-25T22:54:00.529092816Z"
+    description: Run Flex for Apache Flink Community Edition in Kubernetes
+    digest: f384c4a44223234cd0d43b7153083dad88e44eb3bc2b6147c7fd164b805b036d
+    home: https://factorhouse.io/flex/community
+    keywords:
+    - flink
+    - flink-ui
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: flex-ce
+    sources:
+    - https://github.com/factorhouse/flex
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/flex-ce-1.0.63/flex-ce-1.0.63.tgz
+    version: 1.0.63
+  - apiVersion: v2
+    appVersion: "94.2"
     created: "2025-06-25T02:57:48.116895142Z"
     description: Run Flex for Apache Flink Community Edition in Kubernetes
     digest: 5d0c57be76c386dd08398de4175e510cd23f291b927e885e692d48626d45714c
@@ -213,6 +255,30 @@ entries:
     - https://github.com/factorhouse/helm-charts/releases/download/flex-ce-1.0.58/flex-ce-1.0.58.tgz
     version: 1.0.58
   kpow:
+  - apiVersion: v2
+    appVersion: "94.2"
+    created: "2025-06-25T22:54:00.636604589Z"
+    description: Run Kpow for Apache Kafka in Kubernetes
+    digest: f1e64168415c567118b18788093284850274614d0035698a647f5a41f9520222
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-1.0.63/kpow-1.0.63.tgz
+    version: 1.0.63
   - apiVersion: v2
     appVersion: "94.2"
     created: "2025-06-25T02:57:48.232631042Z"
@@ -336,6 +402,30 @@ entries:
   kpow-ce:
   - apiVersion: v2
     appVersion: "94.2"
+    created: "2025-06-25T22:54:00.744823617Z"
+    description: Run Kpow for Apache Kafka Community Edition in Kubernetes
+    digest: 354f20934080d5937928bac379c444bb5c3d8ddfe14855c3df2ed53822228b1e
+    home: https://factorhouse.io/kpow/community
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-ce
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.63/kpow-ce-1.0.63.tgz
+    version: 1.0.63
+  - apiVersion: v2
+    appVersion: "94.2"
     created: "2025-06-25T02:57:48.358479249Z"
     description: Run Kpow for Apache Kafka Community Edition in Kubernetes
     digest: 1563ed219e29e265c80dd52dfd802b2c9d69cd296aadca80745e2f7820b8665f
@@ -454,4 +544,4 @@ entries:
     urls:
     - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.58/kpow-ce-1.0.58.tgz
     version: 1.0.58
-generated: "2025-06-25T02:57:48.358563576Z"
+generated: "2025-06-25T22:54:00.744907613Z"
