@@ -1,0 +1,7 @@
+repositoryID: "a1b2c3d4-e5f6-7890-a1b2-c3d4e5f67890"
+
+# The user who signs MUST be listed here as an owner.
+# The email must match their Artifact Hub account.
+owners:
+  - name: Factor House GitHub CI
+    email: ci@factorhouse.io

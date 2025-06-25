@@ -19,6 +19,27 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Prepare Package Signing
+        run: |
+          # Import the GPG key from secrets
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+
+          # Write the passphrase to a file
+          echo "${{ secrets.GPG_PASSPHRASE }}" > passphrase.txt
+
+          # Create .cr.yaml file
+          cat <<EOF > .cr.yaml
+          # This enables signing
+          sign: true
+          # The key to use for signing
+          key: "$(gpg --list-secret-keys --with-colons | grep 'sec' | cut -d: -f5)"
+          # The file containing the GPG passphrase
+          passphrase-file: "passphrase.txt"
+          EOF          
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
         env:
