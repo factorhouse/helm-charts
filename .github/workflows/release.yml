@@ -25,6 +25,7 @@ jobs:
           set -x
 
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          echo "${{ secrets.GPG_PASSPHRASE }}"
           echo "${{ secrets.GPG_PASSPHRASE }}" > passphrase.txt
           # Run the complex command here and save its output to a file
           gpg --list-secret-keys --with-colons | grep 'sec' | cut -d: -f5 > gpg_key_id.txt
