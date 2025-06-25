@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/FAC-158_gain-more-artifacthub-recognition
 
 jobs:
   release:
@@ -22,14 +21,14 @@ jobs:
 
       - name: Prepare GPG Key
         run: |
-          set -x
-
+          echo "# Import the GPG Key"
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
-          echo "${{ secrets.GPG_PASSPHRASE }}"
+          
+          echo "Create passphrase file"
           echo "${{ secrets.GPG_PASSPHRASE }}" > passphrase.txt
-          # Run the complex command here and save its output to a file
-          gpg --list-secret-keys --with-colons | grep 'sec' | cut -d: -f5 > gpg_key_id.txt
-
+          
+          echo "Store the GPG key ID to a file"
+          GPG_KEY_ID=$(gpg --list-secret-keys --with-colons | grep 'sec' | cut -d: -f5)
           echo "$GPG_KEY_ID" > gpg_key_id.txt
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
