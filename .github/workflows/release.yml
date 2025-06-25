@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/FAC-158_gain-more-artifacthub-recognition
 
 jobs:
   release:
@@ -25,6 +26,7 @@ jobs:
           echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
           
           echo "Create passphrase file"
+          echo "${{ secrets.GPG_PASSPHRASE }}"
           echo "${{ secrets.GPG_PASSPHRASE }}" > passphrase.txt
           
           echo "Store the GPG key ID to a file"
@@ -34,16 +36,16 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: Create .cr.yaml
-        run: |
-          cat <<EOF > .cr.yaml
-          sign: true
-          # Read the key from the file.
-          key: "$(cat gpg_key_id.txt)"
-          passphrase-file: "passphrase.txt"
-          EOF
+      # - name: Create .cr.yaml
+      #   run: |
+      #     cat <<EOF > .cr.yaml
+      #     sign: true
+      #     # Read the key from the file.
+      #     key: "$(cat gpg_key_id.txt)"
+      #     passphrase-file: "passphrase.txt"
+      #     EOF
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.7.0
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      # - name: Run chart-releaser
+      #   uses: helm/chart-releaser-action@v1.7.0
+      #   env:
+      #     CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
