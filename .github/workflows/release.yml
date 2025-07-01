@@ -31,6 +31,9 @@ jobs:
           echo "Store the GPG key ID to a file"
           GPG_KEY_ID=$(gpg --list-secret-keys --with-colons | grep 'sec' | cut -d: -f5)
           echo "$GPG_KEY_ID" > gpg_key_id.txt
+
+          echo "Export the public key to the location chart-releaser expects"
+          gpg --output /home/runner/.gnupg/pubring.gpg --export "$GPG_KEY_ID"
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
