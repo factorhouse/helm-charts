@@ -36,6 +36,7 @@ jobs:
           cat <<EOF > .cr.yaml
           sign: true
           key: "${{ steps.import_gpg.outputs.keyid }}"
+          keyring: "/home/runner/.gnupg/pubring.kbx"
           passphrase-file: "passphrase.txt"
           EOF
         env:
