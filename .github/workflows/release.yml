@@ -27,10 +27,12 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: Create legacy GPG keyring for chart-releaser
+      - name: Export GPG keys for chart-releaser
         run: |
-          # Create a legacy keyring that chart-releaser (Go openpgp) can use
-          gpg --export "${{ steps.import_gpg.outputs.keyid }}" > pubring.gpg          
+          mkdir -p gpg-legacy
+          # Export both public and private keys to a legacy keyring file
+          gpg --export "${{ steps.import_gpg.outputs.keyid }}" > gpg-legacy/pubring.gpg
+          gpg --export-secret-keys "${{ steps.import_gpg.outputs.keyid }}" > gpg-legacy/secring.gpg        
 
       - name: Prepare for Chart Releaser
         run: |
@@ -41,7 +43,8 @@ jobs:
           cat <<EOF > .cr.yaml
           sign: true
           key: "${{ steps.import_gpg.outputs.keyid }}"
-          keyring: "pubring.gpg"
+          keyring: "gpg-legacy/pubring.gpg"
+          secret-keyring: "gpg-legacy/secring.gpg"
           passphrase-file: "passphrase.txt"
           EOF
         env:
