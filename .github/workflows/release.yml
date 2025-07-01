@@ -27,20 +27,20 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: Export legacy GPG keyring for chart-releaser
+      - name: Export GPG keyring for chart-releaser (GPG 2.x compatible)
         run: |
-          mkdir -p gpg-legacy
+          mkdir -p gpg-keyring
 
-          # Export public key in legacy-compatible format
-          gpg --no-default-keyring \
-              --keyring ./gpg-legacy/pubring.gpg \
-              --export "${{ steps.import_gpg.outputs.keyid }}"
-
-          # Export private key in legacy-compatible format
           gpg --batch --yes --pinentry-mode loopback \
-              --no-default-keyring \
-              --secret-keyring ./gpg-legacy/secring.gpg \
-              --export-secret-keys "${{ steps.import_gpg.outputs.keyid }}"
+              --passphrase "$GPG_PASSPHRASE" \
+              --export-secret-keys "${{ steps.import_gpg.outputs.keyid }}" \
+              > gpg-keyring/secring.gpg
+
+          gpg --batch --yes \
+              --export "${{ steps.import_gpg.outputs.keyid }}" \
+              > gpg-keyring/pubring.gpg
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Prepare for Chart Releaser
         run: |
@@ -49,12 +49,12 @@ jobs:
           cat <<EOF > .cr.yaml
           sign: true
           key: "${{ steps.import_gpg.outputs.keyid }}"
-          keyring: "gpg-legacy/pubring.gpg"
-          secret-keyring: "gpg-legacy/secring.gpg"
+          keyring: "gpg-keyring/pubring.gpg"
+          secret-keyring: "gpg-keyring/secring.gpg"
           passphrase-file: "passphrase.txt"
           EOF
         env:
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}        
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
