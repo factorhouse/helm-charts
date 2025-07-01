@@ -20,35 +20,43 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Import GPG private key
+      - name: Setup GPG
         run: |
+          # Import the private key
           echo "$GPG_PRIVATE_KEY" | gpg --batch --import
-          # Trust the imported key ultimately to avoid trust prompts
+          
+          # Get key ID
           KEY_ID=$(gpg --list-secret-keys --with-colons | grep '^sec' | head -n1 | cut -d':' -f5)
           echo "KEY_ID=$KEY_ID" >> $GITHUB_ENV
+          
+          # Trust the key ultimately
+          echo "$KEY_ID:6:" | gpg --import-ownertrust
+          
+          # Test signing to ensure key works
+          echo "test" | gpg --batch --yes --pinentry-mode loopback \
+              --passphrase "$GPG_PASSPHRASE" \
+              --armor --detach-sign --local-user "$KEY_ID"
+              
+          echo "GPG setup complete. Key ID: $KEY_ID"
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-
-      - name: Create combined GPG keyring for chart-releaser
-        run: |
-          mkdir -p gpg-keyring
-          gpg --batch --yes --pinentry-mode loopback \
-              --passphrase "$GPG_PASSPHRASE" \
-              --export-secret-keys "$KEY_ID" > gpg-keyring/combined.gpg
-          gpg --batch --yes \
-              --export "$KEY_ID" >> gpg-keyring/combined.gpg
-        env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-
-      - name: Prepare for Chart Releaser
+          
+      - name: Create Chart Releaser config
         run: |
           echo "$GPG_PASSPHRASE" > passphrase.txt
+          chmod 600 passphrase.txt
+          
           cat <<EOF > .cr.yaml
           sign: true
           key: "$KEY_ID"
-          keyring: "gpg-keyring/combined.gpg"
           passphrase-file: "passphrase.txt"
           EOF
+          
+          echo "=== Chart Releaser Config ==="
+          cat .cr.yaml
+          echo "=== Available Keys ==="
+          gpg --list-secret-keys --keyid-format LONG
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           
