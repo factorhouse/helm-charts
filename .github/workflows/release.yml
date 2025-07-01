@@ -25,12 +25,14 @@ jobs:
           # Import the private key
           echo "$GPG_PRIVATE_KEY" | gpg --batch --import
           
-          # Get key ID
+          # Get key ID and fingerprint
           KEY_ID=$(gpg --list-secret-keys --with-colons | grep '^sec' | head -n1 | cut -d':' -f5)
+          KEY_FINGERPRINT=$(gpg --list-secret-keys --with-colons | grep '^fpr' | head -n1 | cut -d':' -f10)
           echo "KEY_ID=$KEY_ID" >> $GITHUB_ENV
+          echo "KEY_FINGERPRINT=$KEY_FINGERPRINT" >> $GITHUB_ENV
           
-          # Trust the key ultimately
-          echo "$KEY_ID:6:" | gpg --import-ownertrust
+          # Trust the key ultimately using fingerprint
+          echo "${KEY_FINGERPRINT}:6:" | gpg --import-ownertrust
           
           # Test signing to ensure key works
           echo "test" | gpg --batch --yes --pinentry-mode loopback \
@@ -38,6 +40,7 @@ jobs:
               --armor --detach-sign --local-user "$KEY_ID"
               
           echo "GPG setup complete. Key ID: $KEY_ID"
+          echo "GPG setup complete. Fingerprint: $KEY_FINGERPRINT"
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
