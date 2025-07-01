@@ -20,33 +20,25 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Prepare GPG Key
-        run: |
-          echo "# Import the GPG Key"
-          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
-          
-          echo "Create passphrase file"
-          echo "$GPG_PASSPHRASE" > passphrase.txt
-          
-          echo "Store the GPG key ID to a file"
-          GPG_KEY_ID=$(gpg --list-secret-keys --with-colons | grep 'sec' | cut -d: -f5)
-          echo "$GPG_KEY_ID" > gpg_key_id.txt
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-          echo "Export the public key to the location chart-releaser expects"
-          gpg --output /home/runner/.gnupg/pubring.gpg --export "$GPG_KEY_ID"
-        env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-
-      - name: Create .cr.yaml
+      - name: Prepare for Chart Releaser
         run: |
+          # Create a passphrase file for chart-releaser to use for signing
+          echo "${{ secrets.GPG_PASSPHRASE }}" > passphrase.txt
+
+          # Create the .cr.yaml config file using the key ID from the import step
           cat <<EOF > .cr.yaml
           sign: true
-          # Read the key from the file.
-          key: "$(cat gpg_key_id.txt)"
+          key: "${{ steps.import_gpg.outputs.keyid }}"
           passphrase-file: "passphrase.txt"
           EOF
-
+          
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
         with:
