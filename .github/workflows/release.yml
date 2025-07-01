@@ -30,7 +30,7 @@ jobs:
       - name: Prepare for Chart Releaser
         run: |
           # Create a passphrase file for chart-releaser to use for signing
-          echo "${{ secrets.GPG_PASSPHRASE }}" > passphrase.txt
+          echo "$GPG_PASSPHRASE" > passphrase.txt
 
           # Create the .cr.yaml config file using the key ID from the import step
           cat <<EOF > .cr.yaml
@@ -38,6 +38,9 @@ jobs:
           key: "${{ steps.import_gpg.outputs.keyid }}"
           passphrase-file: "passphrase.txt"
           EOF
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}          
           
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.7.0
