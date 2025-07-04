@@ -2,7 +2,7 @@ apiVersion: v2
 name: kpow-ce
 description: Run Kpow for Apache Kafka Community Edition in Kubernetes
 type: application
-version: 1.0.63
+version: 1.0.64
 appVersion: "94.2"
 keywords:
   - kafka
@@ -18,3 +18,7 @@ sources:
 maintainers:
   - name: "Factor House Support"
     email: "support@factorhouse.io"
+annotations:
+  artifacthub.io/signKey: |
+      fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+      url: https://keybase.io/factorhouse/pgp_keys.asc
