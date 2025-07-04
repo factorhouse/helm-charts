@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/FAC-158_update-artifacthub-status
 
 jobs:
   release:
@@ -62,15 +61,3 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_KEY: "${{ secrets.CR_KEY }}" # Key name used while creating key
           CR_SIGN: true # Set to true to sign images
-
-  linter-artifacthub:
-    runs-on: ubuntu-latest
-    container:
-      image: artifacthub/ah
-      options: --user 1001
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Run ah lint
-        working-directory: ./charts/fission-all
-        run: ah lint
