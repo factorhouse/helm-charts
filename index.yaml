@@ -6,6 +6,31 @@ entries:
         fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
         url: https://keybase.io/factorhouse/pgp_keys.asc
     apiVersion: v2
+    appVersion: "94.4"
+    created: "2025-07-29T01:20:38.840579028Z"
+    description: Run Flex for Apache Flink in Kubernetes
+    digest: b14e031d408759c5bc45403cdf86de8290bb7d2330b19841c2424466886f47bd
+    home: https://factorhouse.io/flex
+    keywords:
+    - flink
+    - flink-ui
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: flex
+    sources:
+    - https://github.com/factorhouse/flex
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/flex-1.0.67/flex-1.0.67.tgz
+    version: 1.0.67
+  - annotations:
+      artifacthub.io/signKey: |-
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
     appVersion: "94.3"
     created: "2025-07-29T01:10:08.302271743Z"
     description: Run Flex for Apache Flink in Kubernetes
@@ -208,6 +233,31 @@ entries:
         fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
         url: https://keybase.io/factorhouse/pgp_keys.asc
     apiVersion: v2
+    appVersion: "94.4"
+    created: "2025-07-29T01:20:39.035100551Z"
+    description: Run Flex for Apache Flink Community Edition in Kubernetes
+    digest: 41749d27c1177b5ad0dbda7d5f340fdaa16fca9352620c7b97df75a81692e689
+    home: https://factorhouse.io/flex/community
+    keywords:
+    - flink
+    - flink-ui
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: flex-ce
+    sources:
+    - https://github.com/factorhouse/flex
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/flex-ce-1.0.67/flex-ce-1.0.67.tgz
+    version: 1.0.67
+  - annotations:
+      artifacthub.io/signKey: |-
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
     appVersion: "94.3"
     created: "2025-07-29T01:10:08.498003927Z"
     description: Run Flex for Apache Flink Community Edition in Kubernetes
@@ -405,6 +455,34 @@ entries:
     - https://github.com/factorhouse/helm-charts/releases/download/flex-ce-1.0.58/flex-ce-1.0.58.tgz
     version: 1.0.58
   kpow:
+  - annotations:
+      artifacthub.io/signKey: |-
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
+    appVersion: "94.4"
+    created: "2025-07-29T01:20:39.221669235Z"
+    description: Run Kpow for Apache Kafka in Kubernetes
+    digest: ec9756f52a75fd4d82b09b6fe4bf48f1246cfac1d94d1e705c306eee08d4c756
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-1.0.67/kpow-1.0.67.tgz
+    version: 1.0.67
   - annotations:
       artifacthub.io/signKey: |-
         fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
@@ -639,6 +717,34 @@ entries:
         fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
         url: https://keybase.io/factorhouse/pgp_keys.asc
     apiVersion: v2
+    appVersion: "94.4"
+    created: "2025-07-29T01:20:39.471147712Z"
+    description: Run Kpow for Apache Kafka Community Edition in Kubernetes
+    digest: 237ee91b8339dfe14a59d39d173d1a46eb801b148925f54a8172cbc99dfda9fc
+    home: https://factorhouse.io/kpow/community
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-ce
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.67/kpow-ce-1.0.67.tgz
+    version: 1.0.67
+  - annotations:
+      artifacthub.io/signKey: |-
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
     appVersion: "94.3"
     created: "2025-07-29T01:10:08.936251288Z"
     description: Run Kpow for Apache Kafka Community Edition in Kubernetes
@@ -862,4 +968,4 @@ entries:
     urls:
     - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.58/kpow-ce-1.0.58.tgz
     version: 1.0.58
-generated: "2025-07-29T01:10:08.936384356Z"
+generated: "2025-07-29T01:20:39.471283817Z"
