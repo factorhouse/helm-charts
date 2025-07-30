@@ -29,10 +29,10 @@
             "type": "object"
         },
         "envFromConfigMap": {
-            "type": "null"
+            "type": ["string", "null"]
         },
         "envFromSecret": {
-            "type": "null"
+            "type": ["string", "null"]
         },
         "fullnameOverride": {
             "type": "string"
@@ -95,23 +95,15 @@
                 "limits": {
                     "type": "object",
                     "properties": {
-                        "cpu": {
-                            "type": "integer"
-                        },
-                        "memory": {
-                            "type": "string"
-                        }
+                        "cpu": { "type": ["integer", "string"] },
+                        "memory": { "type": ["integer", "string"] }
                     }
                 },
                 "requests": {
                     "type": "object",
                     "properties": {
-                        "cpu": {
-                            "type": "integer"
-                        },
-                        "memory": {
-                            "type": "string"
-                        }
+                        "cpu": { "type": ["integer", "string"] },
+                        "memory": { "type": ["integer", "string"] }
                     }
                 }
             }
