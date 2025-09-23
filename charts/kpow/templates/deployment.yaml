@@ -43,6 +43,7 @@ spec:
               value: {{ $val | quote }}
             {{- end }}
           {{- end }}
+          {{- if or .Values.envFromConfigMap .Values.envFromSecret }}
           envFrom:
             {{- with .Values.envFromConfigMap }}
             - configMapRef:
@@ -52,6 +53,7 @@ spec:
             - secretRef:
                 name: {{ . }}
             {{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 3000
