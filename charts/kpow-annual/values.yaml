@@ -23,6 +23,18 @@ volumes: []
 #   configMap:
 #     name: "my-kpow-config"
 
+ephemeralTmp:
+  # Sets up an emptyDir volume mount for Snappy compression and other features requiring /tmp access.
+  # Enable this if you use Snappy compression and you have readOnly filesystem Pod policies.
+  enabled: false
+  volumeMount:
+    name: "fh-tmp"
+    mountPath: "/opt/factorhouse/tmp"
+  volume:
+    emptyDir:
+      medium: Memory # Optional: for better performance
+      sizeLimit: "100Mi" # Configurable size
+
 serviceAccount:
   create: true
   annotations: {}
@@ -32,7 +44,14 @@ podAnnotations: {}
 
 podSecurityContext: {}
 
-securityContext: {}
+securityContext:
+  allowPrivilegeEscalation: false
+  privileged: false
+  runAsNonRoot: true
+  runAsUser: 1001
+  capabilities:
+    drop:
+      - ALL
 
 service:
   enabled: true
@@ -73,3 +92,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+labels: { }
