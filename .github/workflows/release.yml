@@ -1,9 +1,11 @@
 name: Release Charts
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
+
+# on:
+#   push:
+#     branches:
+#       - main
 
 jobs:
   release:
@@ -57,6 +59,8 @@ jobs:
 
       - name: Run chart-releaser #this is used to generate new version of helm chart along with some file with extension .prov
         uses: helm/chart-releaser-action@a917fd15b20e8b64b94d9158ad54cd6345335584 #v1.6.0
+        with:
+          skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_KEY: "${{ secrets.CR_KEY }}" # Key name used while creating key
