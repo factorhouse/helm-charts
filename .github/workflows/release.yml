@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - feature/kpow-annual-tests
+      - feature*
 
 jobs:
   release:
