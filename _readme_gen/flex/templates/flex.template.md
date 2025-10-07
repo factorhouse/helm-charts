@@ -22,25 +22,24 @@ container on Dockerhub.
 
 ## Prerequisites
 
-The minimum information Kpow requires to operate is:
-
-- **License Details**: Start a [free 30-day trial](https://factorhouse.io/flex/get-started/).
-- **Flink REST URL**
-
-See the [Kpow Documentation](https://docs.factorhouse.io/kpow/getting-started) for a full list of configuration options.
-
-## Kubernetes
-
-@@include(\_partials/\_configure-eks-environment.md)
-
-### Start a Flex Instance
-
-The minimum information Kpow requires to operate is:
+The minimum information Flex requires to operate is:
 
 - **License Details**: Start a [free 30-day trial](https://factorhouse.io/flex/get-started/).
 - **Flink REST URL**
 
 See the [Flex Documentation](https://docs.factorhouse.io/flex/getting-started) for a full list of configuration options.
+
+## Kubernetes
+
+@@include(\_partials/\_configure-eks-environment.md)
+
+## Run Flex in Kubernetes
+
+### Configure the Flex Helm Repository
+
+@@include(\_partials/\_configure-helm-flex.md)
+
+### Start a Flex Instance
 
 #### Start Flex with config from '--set env.XYZ'
 
@@ -82,7 +81,7 @@ helm install flex factorhouse/flex \
   --create-namespace --namespace factorhouse
 ```
 
-This approach requires a `ConfigMap` named `flex-config` to already exist in the `factorhouse` namespace. To configure Kpow with a local ConfigMap template, see [Start Flex with Local Changes](#start-flex-with-local-changes). You can also refer to [flex-config.yaml.example](./flex-config.yaml.example) for a sample ConfigMap manifest.
+This approach requires a `ConfigMap` named `flex-config` to already exist in the `factorhouse` namespace. To configure flex with a local ConfigMap template, see [Start Flex with Local Changes](#start-flex-with-local-changes). You can also refer to [flex-config.yaml.example](./flex-config.yaml.example) for a sample ConfigMap manifest.
 
 For general guidance, see the Kubernetes documentation on [configuring all key-value pairs in a ConfigMap as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables).
 
@@ -116,7 +115,7 @@ helm install flex ./flex \
 
 #### Run with Local ConfigMap Configuration
 
-This method bundles your configuration into the Helm chart itself. When you run `helm install`, Helm will create the `ConfigMap` resource in Kubernetes and then configure the Kpow pod to use it.
+This method bundles your configuration into the Helm chart itself. When you run `helm install`, Helm will create the `ConfigMap` resource in Kubernetes and then configure the Flex pod to use it.
 
 1.  **Create your `ConfigMap` manifest file.** The `metadata.name` inside this file must match the name you specify in the `--set` flag. For example, `flex-config`. See [flex-config.yaml.example](./flex-config.yaml.example) for a template.
 2.  **Place the manifest file** in the `./flex/templates/` directory.
@@ -147,7 +146,7 @@ helm install flex ./flex \
 
 ### Provide Files to the Flex Pod
 
-@@include(\_partials/\_feature-provide-files-to-kpow-pod.md)
+@@include(\_partials/\_feature-provide-files-to-flex-pod.md)
 
 ### Flex Memory and CPU Requirements
 
