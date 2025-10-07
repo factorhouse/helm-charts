@@ -9,27 +9,31 @@ This Helm chart uses the [factorhouse/flex](https://hub.docker.com/r/factorhouse
 This repository contains a single Helm chart that uses the [factorhouse/flex](https://hub.docker.com/r/factorhouse/flex)
 container on Dockerhub.
 
-* [Prerequisites](#prerequisites)
-* [Kubernetes](#kubernetes)
-* [Run Flex in Kubernetes](#run-flex-in-kubernetes)
-    * [Configure the Flex Helm Repository](#configure-the-flex-helm-repository)
-    * [Start a Flex Instance](#start-a-flex-instance)
-    * [Manage a Flex Instance](#manage-a-flex-instance)
-    * [Start Flex with Local Changes](#start-flex-with-local-changes)
-    * [Manage Sensitive Environment Variables](#manage-sensitive-environment-variables)
-    * [Provide Files to the Flex Pod](#provide-files-to-the-flex-pod)
-    * [Flex Memory and CPU Requirements](#flex-memory-and-cpu-requirements)
+- [Prerequisites](#prerequisites)
+- [Kubernetes](#kubernetes)
+- [Run Flex in Kubernetes](#run-flex-in-kubernetes)
+  - [Configure the Flex Helm Repository](#configure-the-flex-helm-repository)
+  - [Start a Flex Instance](#start-a-flex-instance)
+  - [Manage a Flex Instance](#manage-a-flex-instance)
+  - [Start Flex with Local Changes](#start-flex-with-local-changes)
+  - [Manage Sensitive Environment Variables](#manage-sensitive-environment-variables)
+  - [Provide Files to the Flex Pod](#provide-files-to-the-flex-pod)
+  - [Flex Memory and CPU Requirements](#flex-memory-and-cpu-requirements)
 
 ## Prerequisites
 
-To run the Dockerhub container requires a license. Start a [free 30-day trial](https://factorhouse.io/flex/get-started/)
-of Flex today.
+The minimum information Kpow requires to operate is:
+
+- **License Details**: Start a [free 30-day trial](https://factorhouse.io/flex/get-started/).
+- **Flink REST URL**
+
+See the [Kpow Documentation](https://docs.factorhouse.io/kpow/getting-started) for a full list of configuration options.
 
 ## Kubernetes
 
-You need to connect to a Kubernetes environment before you can install Flex.
+You need to connect to a Kubernetes environment before you can install Kpow.
 
-The following examples demonstrate installing Flex in [Amazon EKS](https://aws.amazon.com/eks/).
+The following examples demonstrate installing Kpow in [Amazon EKS](https://aws.amazon.com/eks/).
 
 ### Configure Kubernetes/EKS
 
@@ -48,55 +52,33 @@ NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   12.345.6.7   <none>        443/TCP   28h
 ```
 
-## Run Flex in Kubernetes
-
-### Configure the Flex Helm Repository
-
-Add the Helm Repository in order to use the Flex Helm Chart.
-
-```
-helm repo add factorhouse https://charts.factorhouse.io
-```
-
-Update Helm repositories to ensure you install the latest version of Flex.
-
-```
-helm repo update
-```
 
 ### Start a Flex Instance
 
-The minimum information required by Flex to operate is:
+The minimum information Kpow requires to operate is:
 
-* License Details
-* Flink REST URL
+- **License Details**: Start a [free 30-day trial](https://factorhouse.io/flex/get-started/).
+- **Flink REST URL**
 
-See the [Flex Documentation](https://docs.factorhouse.io/flex-ee) for a full list of configuration options.
+See the [Flex Documentation](https://docs.factorhouse.io/flex/getting-started) for a full list of configuration options.
 
 #### Start Flex with config from '--set env.XYZ'
 
-##### Quotation #####
+When using `helm install`, you can pass configuration with the `--set env.XYZ` flag. This requires careful formatting for certain values.
 
-Some fields require quoting of characters within the value-string when using --set env.XXX to pass configuration.
+Some fields, particularly integers and strings containing quotation marks, require quoting. You may also need to escape special characters (like commas or nested quotes) with a backslash (`\`). For more details, see Helm's documentation on [The Format and Limitations of `--set`](https://helm.sh/docs/intro/using_helm/#the-format-and-limitations-of---set).
 
-This particularly applies to commas, integers, and quotation marks (see examples below).
-
-##### Command #####
-
-Note, when using `--set` you may need to escape special characters with `\`, see:
-
-https://helm.sh/docs/intro/using_helm/#the-format-and-limitations-of-set
-
-Use the following to install from command line:
+The following example shows how to install Flex from the command line, highlighting how to handle escaped commas and quotes:
 
 ```bash
-helm install --namespace factorhouse --create-namespace flex factorhouse/flex \
+helm install flex factorhouse/flex \
   --set env.LICENSE_ID="00000000-0000-0000-0000-000000000001" \
   --set env.LICENSE_CODE="FLEX_CREDIT" \
-  --set env.LICENSEE="Factor House\, Inc." \ <-- note the quoted comma
+  --set env.LICENSEE="Factor House\, Inc." \ # <-- note the escaped comma
   --set env.LICENSE_EXPIRY="2022-01-01" \
   --set env.LICENSE_SIGNATURE="638......A51" \
-  --set env.FLINK_REST_URL="http://flink-dev.svc"
+  --set env.FLINK_REST_URL="http://flink-dev.svc" \
+  --create-namespace --namespace factorhouse
 
 NAME: flex
 LAST DEPLOYED: Mon May 31 17:22:21 2021
@@ -115,17 +97,14 @@ NOTES:
 You can configure Flex with a ConfigMap of environment variables as follows:
 
 ```bash
-helm install --namespace factorhouse --create-namespace flex factorhouse/flex --set envFromConfigMap=flex-config
+helm install flex factorhouse/flex \
+  --set envFromConfigMap=flex-config \
+  --create-namespace --namespace factorhouse
 ```
 
-This approach expects a ConfigMap to be available within the factorhouse namespace in kube, to understand how to
-configure Flex with a local ConfigMap template see [Start Flex with Local Changes](#start-flex-with-local-changes).
+This approach requires a `ConfigMap` named `flex-config` to already exist in the `factorhouse` namespace. To configure Kpow with a local ConfigMap template, see [Start Flex with Local Changes](#start-flex-with-local-changes). You can also refer to [flex-config.yaml.example](./flex-config.yaml.example) for a sample ConfigMap manifest.
 
-See [flex-config.yaml.example](./flex-config.yaml.example) for an example ConfigMapfile.
-
-See the Kubernetes documentation
-on [configuring all key value pairs in a config map as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables)
-for more information.
+For general guidance, see the Kubernetes documentation on [configuring all key-value pairs in a ConfigMap as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables).
 
 ### Manage a Flex Instance
 
@@ -161,7 +140,7 @@ Status:       Running
 #### View the Flex Pod Logs
 
 ```bash
-kubectl logs --namespace factorhouse $POD_NAME 
+kubectl logs --namespace factorhouse $POD_NAME
 
 11:36:49.111 INFO  [main] flex.system ? start Flex
 ...
@@ -172,6 +151,7 @@ kubectl logs --namespace factorhouse $POD_NAME
 ```bash
 helm delete --namespace factorhouse flex
 ```
+
 
 ### Start Flex with Local Changes
 
@@ -192,17 +172,23 @@ Make any edits required to `flex/Chart.yaml` or `flex/values.yaml` (adding volum
 The command to run local charts is slightly different, see `./flex` rather than `factorhouse/flex`.
 
 ```bash
-helm install --namespace factorhouse --create-namespace flex ./flex <.. --set configuration, etc ..>
+helm install flex ./flex \
+  <.. --set configuration, etc ..> \
+  --create-namespace --namespace factorhouse
 ```
 
 #### Run with Local ConfigMap Configuration
 
-Place your local ConfigMap in the `./flex/templates/` directory.
+This method bundles your configuration into the Helm chart itself. When you run `helm install`, Helm will create the `ConfigMap` resource in Kubernetes and then configure the Kpow pod to use it.
 
-Your local ConfigMap can then be referenced with `--set envFromConfigMap=flex-config`.
+1.  **Create your `ConfigMap` manifest file.** The `metadata.name` inside this file must match the name you specify in the `--set` flag. For example, `flex-config`. See [flex-config.yaml.example](./flex-config.yaml.example) for a template.
+2.  **Place the manifest file** in the `./flex/templates/` directory.
+3.  **Install the chart**, referencing the `ConfigMap` name.
 
 ```bash
-helm install --namespace factorhouse --create-namespace flex ./flex --set envFromConfigMap=flex-config
+helm install flex ./flex \
+  --set envFromConfigMap=flex-config \
+  --create-namespace  --namespace factorhouse
 ```
 
 See [flex-config.yaml.example](./flex-config.yaml.example) for an example ConfigMap file.
@@ -235,17 +221,21 @@ See the Kubernetes documentation
 on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
 for more information.
 
+
 ```bash
-helm install --namespace factorhouse --create-namespace flex ./flex --set envFromSecret=flex-secrets --set envFromConfigMap=flex-config
+helm install flex ./flex \
+  --set envFromSecret=flex-secrets \
+  --set envFromConfigMap=flex-config \
+  --create-namespace --namespace factorhouse
 ```
 
 ### Provide Files to the Flex Pod
 
 There are occasions where you must provide files to the Flex Pod in order for Flex to run correctly, such files include:
 
-* RBAC configuration
-* SSL Keystores
-* SSL Truststores
+- RBAC configuration
+- SSL Keystores
+- SSL Truststores
 
 How you provide these files is down to user preference, we are not able to provide any support or instruction in this
 regard.
@@ -254,9 +244,10 @@ You may find the Kubernetes documentation
 on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume)
 useful.
 
+
 ### Flex Memory and CPU Requirements
 
-These charts run Flex with Guaranteed QoS, having resource request and limit set to these values by default:
+The chart runs Flex with Guaranteed QoS, having resource request and limit set to these values by default:
 
 ```yaml
 resources:
@@ -286,18 +277,22 @@ resources:
     memory: 2Gi
 ```
 
+
 Adjust these values from the command line like so:
 
 ```bash
-helm install --namespace factorhouse --create-namespace flex factorhouse/flex \
+helm install flex factorhouse/flex \
      --set resources.limits.cpu=1 \
      --set resources.limits.memory=2Gi \
      --set resources.requests.cpu=1 \
-     --set resources.requests.memory=2Gi
+     --set resources.requests.memory=2Gi \
+     --create-namespace --namespace factorhouse
 ```
 
 We recommend always having limits and requests set to the same value, as this set Flex in Guaranteed QoS and provides a
 much more reliable operation.
+
+---
 
 ### Get Help!
 
@@ -306,3 +301,4 @@ If you have any issues or errors, please contact support@factorhouse.io.
 ### Licensing and Modifications
 
 This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
+
