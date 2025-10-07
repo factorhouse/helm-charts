@@ -5,11 +5,12 @@
 
 Official Helm Charts for Factor House products. Currently supported:
 
-* [Kpow](charts/kpow/README.md) (`factorhouse/kpow`)
-* [Kpow Community Edition](charts/kpow-ce/README.md) (`factorhouse/kpow-ce`)
-* [Kpow AWS Marketplace (Kpow Annual)](charts/kpow-annual/README.md)(`factorhouse/kpow-annual-chart`)
-* [Flex](charts/flex/README.md) (`factorhouse/flex`)
-* [Flex Community Edition](charts/flex-ce/README.md) (`factorhouse/flex-ce`)
+- [Kpow](charts/kpow/README.md) (`factorhouse/kpow`)
+- [Kpow Community Edition](charts/kpow-ce/README.md) (`factorhouse/kpow-ce`)
+- [Kpow AWS Annual (AWS Marketplace)](charts/kpow-aws-annual/README.md)(`factorhouse/kpow-aws-annual`)
+- [Kpow AWS Hourly (AWS Marketplace)](charts/kpow-aws-hourly/README.md)(`factorhouse/kpow-aws-hourly`)
+- [Flex](charts/flex/README.md) (`factorhouse/flex`)
+- [Flex Community Edition](charts/flex-ce/README.md) (`factorhouse/flex-ce`)
 
 # Installation
 
