@@ -22,6 +22,8 @@ This Helm chart is for the [Kpow Hourly](https://aws.amazon.com/marketplace/pp/p
 
 ## Prerequisites
 
+The minimum information Flex requires to operate is:
+
 - **License Details**: No license required—billing is handled automatically through your AWS account.
 - **Kafka Bootstrap URL**
 
@@ -29,11 +31,25 @@ See the [Kpow Documentation](https://docs.factorhouse.io/kpow/getting-started) f
 
 ## Kubernetes
 
+### Create a Service Account with IAM permissions
+
+```bash
+eksctl create iamserviceaccount \
+    --name kpow \
+    --namespace factorhouse \
+    --cluster <ENTER_YOUR_CLUSTER_NAME_HERE> \
+    --attach-policy-arn arn:aws:iam::aws:policy/AWSMarketplaceMeteringRegisterUsage \
+    --approve \
+    --override-existing-serviceaccounts
+```
+
+You can now deploy Kpow to EKS using this Service Account, which includes an IAM Role with the **AWSMarketplaceMeteringRegisterUsage** policy attached.
+
 @@include(\_partials/\_configure-eks-environment.md)
 
 ## Run Kpow in Kubernetes
 
-### Download the Kpow Hourly Helm chart
+### Download the Kpow Helm chart
 
 @@include(\_partials/\_configure-helm-kpow-aws-hourly.md)
 

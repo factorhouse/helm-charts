@@ -43,8 +43,6 @@ See the [Kpow Documentation](https://docs.factorhouse.io/kpow/getting-started) f
 
 #### Start Kpow with config from '--set env.XYZ'
 
-##### Quotation
-
 When using `helm install`, you can pass configuration with the `--set env.XYZ` flag. This requires careful formatting for certain values.
 
 Some fields, particularly integers and strings containing quotation marks, require quoting. You may also need to escape special characters (like commas or nested quotes) with a backslash (`\`). For more details, see Helm's documentation on [The Format and Limitations of `--set`](https://helm.sh/docs/intro/using_helm/#the-format-and-limitations-of---set).

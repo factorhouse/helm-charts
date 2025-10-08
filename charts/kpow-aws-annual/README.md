@@ -23,6 +23,8 @@ This Helm chart is for the [Kpow Annual](https://aws.amazon.com/marketplace/pp/p
 
 ## Prerequisites
 
+The minimum information Flex requires to operate is:
+
 - **License Details**: No license required—billing is handled automatically through your AWS account.
 - **Kafka Bootstrap URL**
 
@@ -30,11 +32,25 @@ See the [Kpow Documentation](https://docs.factorhouse.io/kpow/getting-started) f
 
 ## Kubernetes
 
+### Create a Service Account with IAM permissions
+
+```bash
+eksctl create iamserviceaccount \
+    --name kpow \
+    --namespace factorhouse \
+    --cluster <ENTER_YOUR_CLUSTER_NAME_HERE> \
+    --attach-policy-arn arn:aws:iam::aws:policy/service-role/AWSLicenseManagerConsumptionPolicy \
+    --approve \
+    --override-existing-serviceaccounts
+```
+
+You can now deploy Kpow to EKS using this Service Account, which includes an IAM Role with the **AWSLicenseManagerConsumptionPolicy** policy attached.
+
+### Configure Kubernetes/EKS
+
 You need to connect to a Kubernetes environment before you can install Kpow.
 
 The following examples demonstrate installing Kpow in [Amazon EKS](https://aws.amazon.com/eks/).
-
-### Configure Kubernetes/EKS
 
 ```bash
 aws eks --region <your-aws-region> update-kubeconfig --name <your-eks-cluster-name>
@@ -45,17 +61,19 @@ Updated context arn:aws:eks:<your-aws-region>:123123123:cluster/<your-eks-cluste
 #### Confirm Kubernetes Cluster Availability
 
 ```bash
-kubectl get svc
+kubectl get nodes
 
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   12.345.6.7   <none>        443/TCP   28h
+NAME                              STATUS   ROLES    AGE     VERSION
+ip-192-168-...-21.ec2.internal   Ready    <none>   2m15s    v1.32.9-eks-113cf36
+...
 ```
+
 
 ## Run Kpow in Kubernetes
 
-### Download the Kpow Annual Helm chart
+### Download the Kpow Helm chart
 
-Download the Helm Repository in order to use the Kpow Helm Chart.
+Download and extract the Helm chart from the Marketplace listing repository.
 
 ```bash
 export HELM_EXPERIMENTAL_OCI=1
@@ -65,10 +83,11 @@ aws ecr get-login-password \
     --password-stdin 709825985650.dkr.ecr.us-east-1.amazonaws.com
 
 mkdir awsmp-chart && cd awsmp-chart
-helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-annual-chart \
+helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-aws-annual \
   --version <VERSION_NUMBER>
 tar xf $(pwd)/* && find $(pwd) -maxdepth 1 -type f -delete
 ```
+
 
 ### Start a Kpow Instance
 
@@ -162,6 +181,7 @@ kubectl logs $POD_NAME --namespace factorhouse
 helm delete kpow --namespace factorhouse
 ```
 
+
 ### Start Kpow with Local Changes
 
 You can run Kpow with local edits to chart files to provide custom configuration.
@@ -231,6 +251,7 @@ See the Kubernetes documentation
 on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
 for more information.
 
+
 ```bash
 helm install kpow ./kpow-aws-annual/ \
   --set envFromSecret=kpow-secrets \
@@ -250,6 +271,7 @@ How you provide these files is down to user preference, we are not able to provi
 regard.
 
 You may find the Kubernetes documentation on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) useful.
+
 
 ### Kpow Memory and CPU Requirements
 
@@ -281,6 +303,7 @@ resources:
     memory: 2Gi
 ```
 
+
 Adjust these values from the command line like so:
 
 ```bash
@@ -308,9 +331,10 @@ ephemeralTmp:
       sizeLimit: "100Mi" # Configurable size
 ```
 
+
 ## Run Kpow in EKS Anywhere
 
-This Helm chart includes extra resources required for the token-based IAM authentication used by **EKS Anywhere**.
+This Helm chart includes extra resources required for the token-based IAM authentication used by **EKS Anywhere**. It can be configured as follows.
 
 ### Step 1: Create Token & IAM Role
 
@@ -375,7 +399,7 @@ kubectl patch serviceaccount kpow \
 
 ### Step 3: Launch Kpow Annual Chart
 
-Download the Helm Repository in order to use the Kpow Helm Chart.
+Download and extract the Helm chart from the Marketplace listing repository.
 
 ```bash
 export HELM_EXPERIMENTAL_OCI=1
@@ -385,10 +409,11 @@ aws ecr get-login-password \
     --password-stdin 709825985650.dkr.ecr.us-east-1.amazonaws.com
 
 mkdir awsmp-chart && cd awsmp-chart
-helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-annual-chart \
+helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-aws-annual \
   --version <VERSION_NUMBER>
 tar xf $(pwd)/* && find $(pwd) -maxdepth 1 -type f -delete
 ```
+
 
 Install Kpow, referencing the Kubernetes resources you created above.
 
@@ -409,3 +434,4 @@ If you have any issues or errors, please contact support@factorhouse.io.
 ### Licensing and Modifications
 
 This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
+

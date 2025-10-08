@@ -22,6 +22,8 @@ This Helm chart is for the [Kpow Hourly](https://aws.amazon.com/marketplace/pp/p
 
 ## Prerequisites
 
+The minimum information Flex requires to operate is:
+
 - **License Details**: No license required—billing is handled automatically through your AWS account.
 - **Kafka Bootstrap URL**
 
@@ -29,11 +31,25 @@ See the [Kpow Documentation](https://docs.factorhouse.io/kpow/getting-started) f
 
 ## Kubernetes
 
+### Create a Service Account with IAM permissions
+
+```bash
+eksctl create iamserviceaccount \
+    --name kpow \
+    --namespace factorhouse \
+    --cluster <ENTER_YOUR_CLUSTER_NAME_HERE> \
+    --attach-policy-arn arn:aws:iam::aws:policy/AWSMarketplaceMeteringRegisterUsage \
+    --approve \
+    --override-existing-serviceaccounts
+```
+
+You can now deploy Kpow to EKS using this Service Account, which includes an IAM Role with the **AWSMarketplaceMeteringRegisterUsage** policy attached.
+
+### Configure Kubernetes/EKS
+
 You need to connect to a Kubernetes environment before you can install Kpow.
 
 The following examples demonstrate installing Kpow in [Amazon EKS](https://aws.amazon.com/eks/).
-
-### Configure Kubernetes/EKS
 
 ```bash
 aws eks --region <your-aws-region> update-kubeconfig --name <your-eks-cluster-name>
@@ -44,18 +60,19 @@ Updated context arn:aws:eks:<your-aws-region>:123123123:cluster/<your-eks-cluste
 #### Confirm Kubernetes Cluster Availability
 
 ```bash
-kubectl get svc
+kubectl get nodes
 
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   12.345.6.7   <none>        443/TCP   28h
+NAME                              STATUS   ROLES    AGE     VERSION
+ip-192-168-...-21.ec2.internal   Ready    <none>   2m15s    v1.32.9-eks-113cf36
+...
 ```
 
 
 ## Run Kpow in Kubernetes
 
-### Download the Kpow Hourly Helm chart
+### Download the Kpow Helm chart
 
-Download the Helm Repository in order to use the Kpow Helm Chart.
+Download and extract the Helm chart from the Marketplace listing repository.
 
 ```bash
 export HELM_EXPERIMENTAL_OCI=1
