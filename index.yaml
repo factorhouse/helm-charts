@@ -949,6 +949,67 @@ entries:
     urls:
     - https://github.com/factorhouse/helm-charts/releases/download/kpow-annual-chart-0.1.0/kpow-annual-chart-0.1.0.tgz
     version: 0.1.0
+  kpow-aws-annual:
+  - annotations:
+      artifacthub.io/signKey: |
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
+    appVersion: "94.5"
+    created: "2025-10-08T21:23:44.428762856Z"
+    description: Run Kpow Annual from the AWS Marketplace in Kubernetes
+    digest: 79c0f0677d61f074f6712ce772d49b0a39d651d0b7633098c902eee19c449681
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - monitoring
+    - aws
+    - aws-marketplace
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-aws-annual
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-aws-annual-1.0.59/kpow-aws-annual-1.0.59.tgz
+    version: 1.0.59
+  kpow-aws-hourly:
+  - annotations:
+      artifacthub.io/signKey: |
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
+    appVersion: "94.5"
+    created: "2025-10-08T21:23:44.584415963Z"
+    description: Run Kpow Hourly from the AWS Marketplace in Kubernetes
+    digest: 1520b6db4bae2740a5147a742e5eb396ff6fb99c28eadb20bcbde0f4e8965080
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    - aws
+    - aws-marketplace
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-aws-hourly
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-aws-hourly-1.0.0/kpow-aws-hourly-1.0.0.tgz
+    version: 1.0.0
   kpow-ce:
   - annotations:
       artifacthub.io/signKey: |-
@@ -1262,4 +1323,4 @@ entries:
     urls:
     - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.58/kpow-ce-1.0.58.tgz
     version: 1.0.58
-generated: "2025-10-01T03:20:02.92708916Z"
+generated: "2025-10-08T21:23:44.750460111Z"
