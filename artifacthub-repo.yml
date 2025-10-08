@@ -1,15 +1,7 @@
-# Artifact Hub repository metadata file
-#
-# Some settings like the verified publisher flag or the ignored packages won't
-# be applied until the next time the repository is processed. Please keep in
-# mind that the repository won't be processed if it has not changed since the
-# last time it was processed. Depending on the repository kind, this is checked
-# in a different way. For Helm http based repositories, we consider it has
-# changed if the `index.yaml` file changes. For git based repositories, it does
-# when the hash of the last commit in the branch you set up changes. This does
-# NOT apply to ownership claim operations, which are processed immediately.
-#
-repositoryID: 5fb55e21-4b83-4fe4-8af9-f23bd7d985db
-owners: # (optional, used to claim repository ownership)
-  - name: dtroywest
-    email: derek@factorhouse.io
+repositoryID: "a1b2c3d4-e5f6-7890-a1b2-c3d4e5f67890"
+
+# The user who signs MUST be listed here as an owner.
+# The email must match their Artifact Hub account.
+owners:
+  - name: Factor House GitHub CI
+    email: ci@factorhouse.io

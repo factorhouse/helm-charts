@@ -1,0 +1,25 @@
+apiVersion: v2
+name: kpow-aws-annual
+description: Run Kpow Annual from the AWS Marketplace in Kubernetes
+type: application
+version: 1.0.59
+appVersion: "94.5"
+keywords:
+  - kafka
+  - kafka-ui
+  - kafka-connect
+  - schema-registry
+  - monitoring
+  - aws
+  - aws-marketplace
+home: "https://factorhouse.io/kpow"
+sources:
+  - "https://github.com/factorhouse/kpow"
+  - "https://github.com/factorhouse/helm-charts/"
+maintainers:
+  - name: "Factor House Support"
+    email: "support@factorhouse.io"
+annotations:
+  artifacthub.io/signKey: |
+    fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+    url: https://keybase.io/factorhouse/pgp_keys.asc
