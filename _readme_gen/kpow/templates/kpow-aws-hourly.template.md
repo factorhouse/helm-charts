@@ -9,8 +9,8 @@ This Helm chart is designed for the [Kpow Hourly](https://aws.amazon.com/marketp
 This Helm chart is for the [Kpow Hourly](https://aws.amazon.com/marketplace/pp/prodview-5jvke6codhrsm) offering on AWS Marketplace.
 
 - [Prerequisites](#prerequisites)
-- [Kubernetes](#kubernetes)
-- [Run Kpow in Kubernetes](#run-kpow-in-kubernetes)
+- [Kubernetes (EKS)](#kubernetes)
+- [Run Kpow in Kubernetes (EKS)](#run-kpow-in-kubernetes)
   - [Configure the Kpow Helm Repository](#configure-the-kpow-helm-repository)
   - [Start a Kpow Instance](#start-a-kpow-instance)
   - [Manage a Kpow Instance](#manage-a-kpow-instance)

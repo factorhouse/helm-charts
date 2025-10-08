@@ -111,7 +111,7 @@ helm install flex factorhouse/flex-ce \
   --create-namespace --namespace factorhouse
 ```
 
-This approach requires a `ConfigMap` named `flex-config` to already exist in the `factorhouse` namespace. To configure Flex with a local ConfigMap template, see [Start Flex with Local Changes](#start-flex-with-local-changes). You can also refer to [flex-config.yaml.example](./flex-config.yaml.example) for a sample ConfigMap manifest.
+This approach requires a `ConfigMap` named `flex-config` to already exist in the `factorhouse` namespace. To configure Flex with a local ConfigMap template, see [Configuring with an Existing ConfigMap](#configuring-with-an-existing-configmap). You can also refer to [flex-config.yaml.example](./flex-config.yaml.example) for a sample ConfigMap manifest.
 
 For general guidance, see the Kubernetes documentation on [configuring all key-value pairs in a ConfigMap as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables).
 
@@ -186,25 +186,42 @@ helm install flex ./flex-ce \
   --create-namespace --namespace factorhouse
 ```
 
-#### Run with Local ConfigMap Configuration
+#### Configuring with an Existing ConfigMap
 
-This method bundles your configuration into the Helm chart itself. When you run `helm install`, Helm will create the `ConfigMap` resource in Kubernetes and then configure the Flex pod to use it.
+This is the recommended method for managing configuration separately from the Helm chart.
 
-1.  **Create your `ConfigMap` manifest file.** The `metadata.name` inside this file must match the name you specify in the `--set` flag. For example, `flex-config`. See [flex-config.yaml.example](./flex-config.yaml.example) for a template.
-2.  **Place the manifest file** in the `./flex-ce/templates/` directory.
-3.  **Install the chart**, referencing the `ConfigMap` name.
+**1. Prepare Your ConfigMap Manifest**
+
+Copy the example file ([flex-config.yaml.example](./kpow-config.yaml.example)), then edit it to set your desired `metadata.name` (e.g., `flex-config`) and fill in your configuration under the `data` section.
+
+```bash
+cp ./flex-ce/flex-config.yaml.example flex-config.yaml
+# now edit flex-config.yaml
+```
+
+**2. Create the ConfigMap in Kubernetes**
+
+Before installing, use `kubectl` to create the `ConfigMap` object in your cluster from the file you just prepared.
+
+```bash
+kubectl apply -f flex-config.yaml --namespace factorhouse
+```
+
+**3. Install the Chart**
+
+Install the Helm chart, using `--set` to reference the name of the `ConfigMap` you just created. The `--create-namespace` flag will ensure the target namespace exists.
 
 ```bash
 helm install flex ./flex-ce \
   --set envFromConfigMap=flex-config \
-  --create-namespace  --namespace factorhouse
+  --create-namespace --namespace factorhouse
 ```
+
+The Flex pod will now start using the environment variables from your externally managed `ConfigMap`.
 
 See [flex-config.yaml.example](./flex-config.yaml.example) for an example ConfigMap file.
 
-See the Kubernetes documentation
-on [configuring all key value pairs in a config map as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables)
-for more information.
+See the Kubernetes documentation on [configuring all key-value pairs in a config map as container environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) for more information.
 
 ### Manage Sensitive Environment Variables
 

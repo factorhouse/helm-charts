@@ -1,4 +1,4 @@
-Add the Helm Repository in order to use the Kpow Helm Chart.
+Download the Helm Repository in order to use the Kpow Helm Chart.
 
 ```bash
 export HELM_EXPERIMENTAL_OCI=1

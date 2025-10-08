@@ -9,8 +9,8 @@ This Helm chart is designed for the [Kpow Annual](https://aws.amazon.com/marketp
 This Helm chart is for the [Kpow Annual](https://aws.amazon.com/marketplace/pp/prodview-5jvke6codhrsm) offering on AWS Marketplace.
 
 - [Prerequisites](#prerequisites)
-- [Kubernetes](#kubernetes)
-- [Run Kpow in Kubernetes](#run-kpow-in-kubernetes)
+- [Kubernetes (EKS)](#kubernetes)
+- [Run Kpow in Kubernetes (EKS)](#run-kpow-in-kubernetes)
   - [Download the Kpow Annual Helm chart](#download-the-kpow-annual-helm-chart)
   - [Start a Kpow Instance](#start-a-kpow-instance)
   - [Manage a Kpow Instance](#manage-a-kpow-instance)
@@ -19,6 +19,7 @@ This Helm chart is for the [Kpow Annual](https://aws.amazon.com/marketplace/pp/p
   - [Provide Files to the Kpow Pod](#provide-files-to-the-kpow-pod)
   - [Kpow Memory and CPU Requirements](#kpow-memory-and-cpu-requirements)
   - [Snappy compression in read-only filesystem](#snappy-compression-in-read-only-filesystem)
+- [Run Kpow in EKS Anywhere](#run-kpow-in-eks-anywhere)
 
 ## Prerequisites
 
@@ -167,6 +168,85 @@ We recommend always having limits and requests set to the same value, as this se
 #### Snappy compression in read-only filesystem
 
 @@include(\_partials/\_feature-snappy-compression.md)
+
+## Run Kpow in EKS Anywhere
+
+This Helm chart includes extra resources required for the token-based IAM authentication used by **EKS Anywhere**. It can be configured as follows.
+
+### Step 1: Create Token & IAM Role
+
+- In the AWS Marketplace console, create a **license token** and an associated IAM role for the Kpow subscription.
+- This token is used to access AWS License Manager APIs for license validation.
+- A button to generate these is available after you subscribe to the product.
+
+### Step 2: Configure Kubernetes Secrets and Service Account
+
+**1. Create the namespace and a dedicated service account**
+
+```bash
+kubectl create namespace factorhouse
+kubectl create serviceaccount kpow --namespace factorhouse
+```
+
+**2. Create the license secret with the values from Step 1**
+
+```bash
+# IMPORTANT: Replace the placeholder values below with your actual token and role ARN.
+AWSMP_TOKEN="<YOUR_LICENSE_TOKEN_HERE>"
+AWSMP_ROLE_ARN="<YOUR_IAM_ROLE_ARN_HERE>"
+
+kubectl create secret generic awsmp-license-token-secret \
+  --from-literal=license_token=$AWSMP_TOKEN \
+  --from-literal=iam_role=$AWSMP_ROLE_ARN \
+  --namespace factorhouse
+```
+
+**3. Create an ECR image pull secret using the license token**
+
+```bash
+AWSMP_ACCESS_TOKEN=$(aws license-manager get-access-token \
+    --output text --query '*' --token $AWSMP_TOKEN --region us-east-1)
+
+AWSMP_ROLE_CREDENTIALS=$(aws sts assume-role-with-web-identity \
+    --region 'us-east-1' \
+    --role-arn $AWSMP_ROLE_ARN \
+    --role-session-name 'AWSMP-guided-deployment-session' \
+    --web-identity-token $AWSMP_ACCESS_TOKEN \
+    --query 'Credentials' \
+    --output text)
+
+export AWS_ACCESS_KEY_ID=$(echo $AWSMP_ROLE_CREDENTIALS | awk '{print $1}' | xargs)
+export AWS_SECRET_ACCESS_KEY=$(echo $AWSMP_ROLE_CREDENTIALS | awk '{print $3}' | xargs)
+export AWS_SESSION_TOKEN=$(echo $AWSMP_ROLE_CREDENTIALS | awk '{print $4}' | xargs)
+
+kubectl create secret docker-registry awsmp-image-pull-secret \
+  --docker-server=709825985650.dkr.ecr.us-east-1.amazonaws.com \
+  --docker-username=AWS \
+  --docker-password=$(aws ecr get-login-password --region us-east-1) \
+  --namespace factorhouse
+```
+
+**4. Link the image pull secret to the service account**
+
+```bash
+kubectl patch serviceaccount kpow \
+  --namespace factorhouse \
+  -p '{"imagePullSecrets": [{"name": "awsmp-image-pull-secret"}]}'
+```
+
+### Step 3: Launch Kpow Annual Chart
+
+@@include(\_partials/\_configure-helm-kpow-aws-annual.md)
+
+Install Kpow, referencing the Kubernetes resources you created above.
+
+```bash
+helm install kpow ./kpow-aws-annual/ \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=kpow \
+  --set aws.licenseConfigSecretName=awsmp-license-token-secret \
+  --create-namespace --namespace factorhouse
+```
 
 ---
 

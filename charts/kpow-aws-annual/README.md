@@ -9,8 +9,8 @@ This Helm chart is designed for the [Kpow Annual](https://aws.amazon.com/marketp
 This Helm chart is for the [Kpow Annual](https://aws.amazon.com/marketplace/pp/prodview-5jvke6codhrsm) offering on AWS Marketplace.
 
 - [Prerequisites](#prerequisites)
-- [Kubernetes](#kubernetes)
-- [Run Kpow in Kubernetes](#run-kpow-in-kubernetes)
+- [Kubernetes (EKS)](#kubernetes)
+- [Run Kpow in Kubernetes (EKS)](#run-kpow-in-kubernetes)
   - [Download the Kpow Annual Helm chart](#download-the-kpow-annual-helm-chart)
   - [Start a Kpow Instance](#start-a-kpow-instance)
   - [Manage a Kpow Instance](#manage-a-kpow-instance)
@@ -19,6 +19,7 @@ This Helm chart is for the [Kpow Annual](https://aws.amazon.com/marketplace/pp/p
   - [Provide Files to the Kpow Pod](#provide-files-to-the-kpow-pod)
   - [Kpow Memory and CPU Requirements](#kpow-memory-and-cpu-requirements)
   - [Snappy compression in read-only filesystem](#snappy-compression-in-read-only-filesystem)
+- [Run Kpow in EKS Anywhere](#run-kpow-in-eks-anywhere)
 
 ## Prerequisites
 
@@ -50,12 +51,11 @@ NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   12.345.6.7   <none>        443/TCP   28h
 ```
 
-
 ## Run Kpow in Kubernetes
 
 ### Download the Kpow Annual Helm chart
 
-Add the Helm Repository in order to use the Kpow Helm Chart.
+Download the Helm Repository in order to use the Kpow Helm Chart.
 
 ```bash
 export HELM_EXPERIMENTAL_OCI=1
@@ -69,7 +69,6 @@ helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-a
   --version <VERSION_NUMBER>
 tar xf $(pwd)/* && find $(pwd) -maxdepth 1 -type f -delete
 ```
-
 
 ### Start a Kpow Instance
 
@@ -113,7 +112,7 @@ helm install kpow ./kpow-aws-annual/ \
   --create-namespace --namespace factorhouse
 ```
 
-This approach requires a `ConfigMap` named `kpow-config` to already exist in the `factorhouse` namespace. To configure Kpow with a local ConfigMap template, see [Start Kpow with Local Changes](#start-kpow-with-local-changes). You can also refer to [kpow-config.yaml.example](./kpow-config.yaml.example) for a sample ConfigMap manifest.
+This approach requires a `ConfigMap` named `kpow-config` to already exist in the `factorhouse` namespace. To configure Kpow with a local ConfigMap template, see [Configuring with an Existing ConfigMap](#configuring-with-an-existing-configmap). You can also refer to [kpow-config.yaml.example](./kpow-config.yaml.example) for a sample ConfigMap manifest.
 
 For general guidance, see the Kubernetes documentation on [configuring all key-value pairs in a ConfigMap as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables).
 
@@ -163,7 +162,6 @@ kubectl logs $POD_NAME --namespace factorhouse
 helm delete kpow --namespace factorhouse
 ```
 
-
 ### Start Kpow with Local Changes
 
 You can run Kpow with local edits to chart files to provide custom configuration.
@@ -172,21 +170,42 @@ You can run Kpow with local edits to chart files to provide custom configuration
 
 Make any edits required to `kpow-aws-annual/Chart.yaml` or `kpow-aws-annual/values.yaml` (adding volume mounts, etc).
 
-#### Run with Local ConfigMap Configuration
+#### Configuring with an Existing ConfigMap
 
-This method bundles your configuration into the Helm chart itself. When you run `helm install`, Helm will create the `ConfigMap` resource in Kubernetes and then configure the Kpow pod to use it.
+This is the recommended method for managing configuration separately from the Helm chart.
 
-1.  **Create your `ConfigMap` manifest file.** The `metadata.name` inside this file must match the name you specify in the `--set` flag. For example, `kpow-config`. See [kpow-config.yaml.example](./kpow-config.yaml.example) for a template.
-2.  **Place the manifest file** in the `./kpow-aws-annual/templates/` directory.
-3.  **Install the chart**, referencing the `ConfigMap` name.
+**1. Prepare Your ConfigMap Manifest**
+
+Copy the example file ([kpow-config.yaml.example](./kpow-config.yaml.example)), then edit it to set your desired `metadata.name` (e.g., `kpow-config`) and fill in your configuration under the `data` section.
 
 ```bash
-helm install kpow ./kpow-aws-annual/ \
+cp ./kpow-aws-annual/kpow-config.yaml.example kpow-config.yaml
+# now edit kpow-config.yaml
+```
+
+**2. Create the ConfigMap in Kubernetes**
+
+Before installing, use `kubectl` to create the `ConfigMap` object in your cluster from the file you just prepared.
+
+```bash
+kubectl apply -f kpow-config.yaml --namespace factorhouse
+```
+
+**3. Install the Chart**
+
+Install the Helm chart, using `--set` to reference the name of the `ConfigMap` you just created. The `--create-namespace` flag will ensure the target namespace exists.
+
+```bash
+helm install kpow ./kpow-aws-annual \
   --set envFromConfigMap=kpow-config \
   --create-namespace --namespace factorhouse
 ```
 
-See the Kubernetes documentation on [configuring all key value pairs in a config map as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) for more information.
+The Kpow pod will now start using the environment variables from your externally managed `ConfigMap`.
+
+See [kpow-config.yaml.example](./kpow-config.yaml.example) for an example ConfigMap file.
+
+See the Kubernetes documentation on [configuring all key-value pairs in a config map as container environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) for more information.
 
 ### Manage Sensitive Environment Variables
 
@@ -212,7 +231,6 @@ See the Kubernetes documentation
 on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
 for more information.
 
-
 ```bash
 helm install kpow ./kpow-aws-annual/ \
   --set envFromSecret=kpow-secrets \
@@ -232,7 +250,6 @@ How you provide these files is down to user preference, we are not able to provi
 regard.
 
 You may find the Kubernetes documentation on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) useful.
-
 
 ### Kpow Memory and CPU Requirements
 
@@ -264,7 +281,6 @@ resources:
     memory: 2Gi
 ```
 
-
 Adjust these values from the command line like so:
 
 ```bash
@@ -292,6 +308,97 @@ ephemeralTmp:
       sizeLimit: "100Mi" # Configurable size
 ```
 
+## Run Kpow in EKS Anywhere
+
+This Helm chart includes extra resources required for the token-based IAM authentication used by **EKS Anywhere**.
+
+### Step 1: Create Token & IAM Role
+
+- In the AWS Marketplace console, create a **license token** and an associated IAM role for the Kpow subscription.
+- This token is used to access AWS License Manager APIs for license validation.
+- A button to generate these is available after you subscribe to the product.
+
+### Step 2: Configure Kubernetes Secrets and Service Account
+
+**1. Create the namespace and a dedicated service account**
+
+```bash
+kubectl create namespace factorhouse
+kubectl create serviceaccount kpow --namespace factorhouse
+```
+
+**2. Create the license secret with the values from Step 1**
+
+```bash
+# IMPORTANT: Replace the placeholder values below with your actual token and role ARN.
+AWSMP_TOKEN="<YOUR_LICENSE_TOKEN_HERE>"
+AWSMP_ROLE_ARN="<YOUR_IAM_ROLE_ARN_HERE>"
+
+kubectl create secret generic awsmp-license-token-secret \
+  --from-literal=license_token=$AWSMP_TOKEN \
+  --from-literal=iam_role=$AWSMP_ROLE_ARN \
+  --namespace factorhouse
+```
+
+**3. Create an ECR image pull secret using the license token**
+
+```bash
+AWSMP_ACCESS_TOKEN=$(aws license-manager get-access-token \
+    --output text --query '*' --token $AWSMP_TOKEN --region us-east-1)
+
+AWSMP_ROLE_CREDENTIALS=$(aws sts assume-role-with-web-identity \
+    --region 'us-east-1' \
+    --role-arn $AWSMP_ROLE_ARN \
+    --role-session-name 'AWSMP-guided-deployment-session' \
+    --web-identity-token $AWSMP_ACCESS_TOKEN \
+    --query 'Credentials' \
+    --output text)
+
+export AWS_ACCESS_KEY_ID=$(echo $AWSMP_ROLE_CREDENTIALS | awk '{print $1}' | xargs)
+export AWS_SECRET_ACCESS_KEY=$(echo $AWSMP_ROLE_CREDENTIALS | awk '{print $3}' | xargs)
+export AWS_SESSION_TOKEN=$(echo $AWSMP_ROLE_CREDENTIALS | awk '{print $4}' | xargs)
+
+kubectl create secret docker-registry awsmp-image-pull-secret \
+  --docker-server=709825985650.dkr.ecr.us-east-1.amazonaws.com \
+  --docker-username=AWS \
+  --docker-password=$(aws ecr get-login-password --region us-east-1) \
+  --namespace factorhouse
+```
+
+**4. Link the image pull secret to the service account**
+
+```bash
+kubectl patch serviceaccount kpow \
+  --namespace factorhouse \
+  -p '{"imagePullSecrets": [{"name": "awsmp-image-pull-secret"}]}'
+```
+
+### Step 3: Launch Kpow Annual Chart
+
+Download the Helm Repository in order to use the Kpow Helm Chart.
+
+```bash
+export HELM_EXPERIMENTAL_OCI=1
+aws ecr get-login-password \
+    --region us-east-1 | helm registry login \
+    --username AWS \
+    --password-stdin 709825985650.dkr.ecr.us-east-1.amazonaws.com
+
+mkdir awsmp-chart && cd awsmp-chart
+helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-annual-chart \
+  --version <VERSION_NUMBER>
+tar xf $(pwd)/* && find $(pwd) -maxdepth 1 -type f -delete
+```
+
+Install Kpow, referencing the Kubernetes resources you created above.
+
+```bash
+helm install kpow ./kpow-aws-annual/ \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=kpow \
+  --set aws.licenseConfigSecretName=awsmp-license-token-secret \
+  --create-namespace --namespace factorhouse
+```
 
 ---
 
@@ -302,4 +409,3 @@ If you have any issues or errors, please contact support@factorhouse.io.
 ### Licensing and Modifications
 
 This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
-
