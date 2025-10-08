@@ -31,45 +31,13 @@ See the [Kpow Documentation](https://docs.factorhouse.io/kpow/getting-started) f
 
 ## Kubernetes
 
-### Configure Kubernetes/EKS
-
-You need to connect to a Kubernetes environment before you can install Kpow.
-
-The following examples demonstrate installing Kpow in [Amazon EKS](https://aws.amazon.com/eks/).
-
-```bash
-aws eks --region <your-aws-region> update-kubeconfig --name <your-eks-cluster-name>
-
-Updated context arn:aws:eks:<your-aws-region>:123123123:cluster/<your-eks-cluster-name> in /your/.kube/config
-```
-
-#### Confirm Kubernetes Cluster Availability
-
-```bash
-kubectl get nodes
-
-NAME                              STATUS   ROLES    AGE     VERSION
-ip-192-168-...-21.ec2.internal   Ready    <none>   2m15s    v1.32.9-eks-113cf36
-...
-```
-
+@@include(\_partials/\_configure-eks-environment.md)
 
 ## Run Kpow in Kubernetes
 
 ### Configure the Kpow Helm Repository
 
-Add the Factor House Helm Repository in order to use the Kpow Helm Chart.
-
-```bash
-helm repo add factorhouse https://charts.factorhouse.io
-```
-
-Update Helm repositories to ensure you install the latest version of Kpow.
-
-```bash
-helm repo update
-```
-
+@@include(\_partials/\_configure-helm-kpow.md)
 
 ### Start a Kpow Instance
 
@@ -123,50 +91,7 @@ For general guidance, see the Kubernetes documentation on [configuring all key-v
 
 ### Manage a Kpow Instance
 
-#### Set the $POD_NAME variable and test the Kpow UI
-
-Follow the notes instructions to set the $POD_NAME variable and configure port forwarding to the Kpow UI.
-
-```bash
-export POD_NAME=$(kubectl get pods --namespace factorhouse -l "app.kubernetes.io/name=kpow,app.kubernetes.io/instance=kpow" -o jsonpath="{.items[0].metadata.name}")
-echo "Visit http://127.0.0.1:3000 to use your application"
-kubectl --namespace factorhouse port-forward $POD_NAME 3000:3000
-```
-
-Kpow is now available on [http://127.0.0.1:3000](http://127.0.0.1:3000).
-
-#### Check the Kpow Pod
-
-```bash
-kubectl describe pods --namespace factorhouse
-
-Name:         kpow-9988df6b6-vvf8z
-Namespace:    factorhouse
-Priority:     0
-Node:         ip-172-31-33-42.ap-southeast-2.compute.internal/172.31.33.42
-Start Time:   Mon, 31 May 2021 17:22:22 +1000
-Labels:       app.kubernetes.io/instance=kpow
-              app.kubernetes.io/name=kpow
-              pod-template-hash=9988df6b6
-Annotations:  kubernetes.io/psp: eks.privileged
-Status:       Running
-```
-
-#### View the Kpow Pod Logs
-
-```bash
-kubectl logs $POD_NAME --namespace factorhouse
-
-11:36:49.111 INFO  [main] kpow.system ? start Kpow
-...
-```
-
-#### Remove Kpow
-
-```bash
-helm delete kpow --namespace factorhouse
-```
-
+@@include(\_partials/\_feature-manage-kpow-instance.md)
 
 ### Start Kpow with Local Changes
 
@@ -231,28 +156,7 @@ See the Kubernetes documentation on [configuring all key-value pairs in a config
 
 ### Manage Sensitive Environment Variables
 
-This helm chart accepts the name of a secret containing sensitive parameters, e.g.
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: kpow-secrets
-data:
-  SASL_JAAS_CONFIG: a3JnLmFwYWNoXS5rYWZrYS5jb21tb24uc2VjdXJpdHkucGxhaW4uUGxhaW5Mb2dpbk2vZHVsZSByZXF1aXJiZCB1c2VybmFtZT0iTFQ1V0ZaV1BRWUpHNzRJQyIgcGFzc3dvcmQ9IjlYUFVYS3BLYUQxYzVJdXVNRjRPKzZ2NxJ0a1E4aS9yWUp6YlppdlgvZnNiTG51eGY4SnlFT1dUeXMvTnJ1bTAiBwo=
-  CONFLUENT_API_SECRET: NFJSejlReFNTTXlTcGhXdjNLMHNYY1F6UGNURmdadlNYT0ZXSXViWFJySmx2N3A2WStSenROQnVpYThvNG1NSRo=
-```
-
-```bash
-kubectl apply -f ./kpow-secrets.yaml --namespace factorhouse
-```
-
-Then run the helm chart (this can be used in conjunction with `envFromConfigMap`)
-
-See the Kubernetes documentation
-on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
-for more information.
-
+@@include(\_partials/\_feature-manage-sensitive-env-vars.md)
 
 ```bash
 helm install kpow ./kpow \
@@ -263,48 +167,11 @@ helm install kpow ./kpow \
 
 ### Provide Files to the Kpow Pod
 
-There are occasions where you must provide files to the Kpow Pod in order for Kpow to run correctly, such files include:
-
-- RBAC configuration
-- SSL Keystores
-- SSL Truststores
-
-How you provide these files is down to user preference, we are not able to provide any support or instruction in this
-regard.
-
-You may find the Kubernetes documentation on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) useful.
-
+@@include(\_partials/\_feature-provide-files-to-kpow-pod.md)
 
 ### Kpow Memory and CPU Requirements
 
-The chart runs Kpow with Guaranteed QoS, having resource request and limit set to these values by default:
-
-```yaml
-resources:
-  limits:
-    cpu: 2
-    memory: 8Gi
-  requests:
-    cpu: 2
-    memory: 8Gi
-```
-
-These default resource settings are conservative, suited to a deployment of Kpow that manages multiple Kafka clusters and associated resources.
-
-When running Kpow with a single Kafka cluster you can experiment with reducing those resources as far as our suggested minimum:
-
-#### Minimum Resource Requirements
-
-```yaml
-resources:
-  limits:
-    cpu: 1
-    memory: 2Gi
-  requests:
-    cpu: 1
-    memory: 2Gi
-```
-
+@@include(\_partials/\_feature-memory-cpu-requirements.md)
 
 Adjust these values from the command line like so:
 
@@ -321,26 +188,8 @@ We recommend always having limits and requests set to the same value, as this se
 
 #### Snappy compression in read-only filesystem
 
-We preset an attribute for Snappy compression in read-only filesystems. It is disabled by default and can be enabled -
-modify the volume configuration if necessary.
-
-```yaml
-ephemeralTmp:
-  enabled: true
-  volume:
-    emptyDir:
-      medium: Memory # Optional: for better performance
-      sizeLimit: "100Mi" # Configurable size
-```
-
+@@include(\_partials/\_feature-snappy-compression.md)
 
 ---
 
-### Get Help!
-
-If you have any issues or errors, please contact support@factorhouse.io.
-
-### Licensing and Modifications
-
-This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
-
+@@include(\_partials/\_general-footer.md)
