@@ -49,7 +49,7 @@ You can now deploy Kpow to EKS using this Service Account, which includes an IAM
 
 ## Run Kpow in Kubernetes
 
-### Download the Kpow Helm chart
+### Configure the Kpow Helm Repository
 
 @@include(\_partials/\_configure-helm-kpow-aws-hourly.md)
 
@@ -64,7 +64,7 @@ Some fields, particularly integers and strings containing quotation marks, requi
 The following example shows how to install Kpow from the command line, highlighting how to handle escaped commas and quotes:
 
 ```bash
-helm install kpow ./kpow-aws-hourly/ \
+helm install kpow factorhouse/kpow-aws-hourly \
   --set serviceAccount.create=false \
   --set serviceAccount.name=kpow \
   --set env.BOOTSTRAP="b-1.<cluster-name>.<cluster-identifier>.c8.kafka.us-east-1.amazonaws.com:9096" \
@@ -90,7 +90,7 @@ NOTES:
 You can configure Kpow with a ConfigMap of environment variables as follows:
 
 ```bash
-helm install kpow ./kpow-aws-hourly/ \
+helm install kpow factorhouse/kpow-aws-hourly \
   --set envFromConfigMap=kpow-config \
   --create-namespace --namespace factorhouse
 ```
@@ -107,9 +107,25 @@ For general guidance, see the Kubernetes documentation on [configuring all key-v
 
 You can run Kpow with local edits to chart files to provide custom configuration.
 
+#### Pull and Untar the Kpow Charts
+
+```bash
+helm pull factorhouse/kpow-aws-hourly --untar --untardir .
+```
+
 #### Make Local Edits
 
 Make any edits required to `kpow-aws-hourly/Chart.yaml` or `kpow-aws-hourly/values.yaml` (adding volume mounts, etc).
+
+#### Run Local Charts
+
+The command to run local charts is slightly different, see `./kpow-aws-hourly` rather than `factorhouse/kpow-aws-hourly`.
+
+```bash
+helm install kpow ./kpow-aws-hourly \
+  <.. --set configuration, etc ..> \
+  --create-namespace -namespace factorhouse
+```
 
 #### Configuring with an Existing ConfigMap
 

@@ -67,26 +67,21 @@ ip-192-168-...-21.ec2.internal   Ready    <none>   2m15s    v1.32.9-eks-113cf36
 ...
 ```
 
-
 ## Run Kpow in Kubernetes
 
-### Download the Kpow Helm chart
+### Configure the Kpow Helm Repository
 
-Download and extract the Helm chart from the Marketplace listing repository.
+Add the Factor House Helm Repository in order to use the Kpow Helm Chart.
 
 ```bash
-export HELM_EXPERIMENTAL_OCI=1
-aws ecr get-login-password \
-    --region us-east-1 | helm registry login \
-    --username AWS \
-    --password-stdin 709825985650.dkr.ecr.us-east-1.amazonaws.com
-
-mkdir awsmp-chart && cd awsmp-chart
-helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-aws-hourly \
-  --version <VERSION_NUMBER>
-tar xf $(pwd)/* && find $(pwd) -maxdepth 1 -type f -delete
+helm repo add factorhouse https://charts.factorhouse.io
 ```
 
+Update Helm repositories to ensure you install the latest version of Kpow.
+
+```bash
+helm repo update
+```
 
 ### Start a Kpow Instance
 
@@ -99,7 +94,7 @@ Some fields, particularly integers and strings containing quotation marks, requi
 The following example shows how to install Kpow from the command line, highlighting how to handle escaped commas and quotes:
 
 ```bash
-helm install kpow ./kpow-aws-hourly/ \
+helm install kpow factorhouse/kpow-aws-hourly \
   --set serviceAccount.create=false \
   --set serviceAccount.name=kpow \
   --set env.BOOTSTRAP="b-1.<cluster-name>.<cluster-identifier>.c8.kafka.us-east-1.amazonaws.com:9096" \
@@ -125,7 +120,7 @@ NOTES:
 You can configure Kpow with a ConfigMap of environment variables as follows:
 
 ```bash
-helm install kpow ./kpow-aws-hourly/ \
+helm install kpow factorhouse/kpow-aws-hourly \
   --set envFromConfigMap=kpow-config \
   --create-namespace --namespace factorhouse
 ```
@@ -180,14 +175,29 @@ kubectl logs $POD_NAME --namespace factorhouse
 helm delete kpow --namespace factorhouse
 ```
 
-
 ### Start Kpow with Local Changes
 
 You can run Kpow with local edits to chart files to provide custom configuration.
 
+#### Pull and Untar the Kpow Charts
+
+```bash
+helm pull factorhouse/kpow-aws-hourly --untar --untardir .
+```
+
 #### Make Local Edits
 
 Make any edits required to `kpow-aws-hourly/Chart.yaml` or `kpow-aws-hourly/values.yaml` (adding volume mounts, etc).
+
+#### Run Local Charts
+
+The command to run local charts is slightly different, see `./kpow-aws-hourly` rather than `factorhouse/kpow-aws-hourly`.
+
+```bash
+helm install kpow ./kpow-aws-hourly \
+  <.. --set configuration, etc ..> \
+  --create-namespace -namespace factorhouse
+```
 
 #### Configuring with an Existing ConfigMap
 
@@ -250,7 +260,6 @@ See the Kubernetes documentation
 on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
 for more information.
 
-
 ```bash
 helm install kpow ./kpow-aws-hourly/ \
   --set envFromSecret=kpow-secrets \
@@ -270,7 +279,6 @@ How you provide these files is down to user preference, we are not able to provi
 regard.
 
 You may find the Kubernetes documentation on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) useful.
-
 
 ### Kpow Memory and CPU Requirements
 
@@ -302,7 +310,6 @@ resources:
     memory: 2Gi
 ```
 
-
 Adjust these values from the command line like so:
 
 ```bash
@@ -330,7 +337,6 @@ ephemeralTmp:
       sizeLimit: "100Mi" # Configurable size
 ```
 
-
 ---
 
 ### Get Help!
@@ -340,4 +346,3 @@ If you have any issues or errors, please contact support@factorhouse.io.
 ### Licensing and Modifications
 
 This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
-
