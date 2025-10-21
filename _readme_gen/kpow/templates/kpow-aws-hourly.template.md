@@ -22,7 +22,7 @@ This Helm chart is for the [Kpow Hourly](https://aws.amazon.com/marketplace/pp/p
 
 ## Prerequisites
 
-The minimum information Flex requires to operate is:
+The minimum information Kpow requires to operate is:
 
 - **License Details**: No license required—billing is handled automatically through your AWS account.
 - **Kafka Bootstrap URL**
