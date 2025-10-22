@@ -22,7 +22,7 @@ This Helm chart is for the [Kpow Hourly](https://aws.amazon.com/marketplace/pp/p
 
 ## Prerequisites
 
-The minimum information Flex requires to operate is:
+The minimum information Kpow requires to operate is:
 
 - **License Details**: No license required—billing is handled automatically through your AWS account.
 - **Kafka Bootstrap URL**
@@ -70,21 +70,18 @@ ip-192-168-...-21.ec2.internal   Ready    <none>   2m15s    v1.32.9-eks-113cf36
 
 ## Run Kpow in Kubernetes
 
-### Download the Kpow Helm chart
+### Configure the Kpow Helm Repository
 
-Download and extract the Helm chart from the Marketplace listing repository.
+Add the Factor House Helm Repository in order to use the Kpow Helm Chart.
 
 ```bash
-export HELM_EXPERIMENTAL_OCI=1
-aws ecr get-login-password \
-    --region us-east-1 | helm registry login \
-    --username AWS \
-    --password-stdin 709825985650.dkr.ecr.us-east-1.amazonaws.com
+helm repo add factorhouse https://charts.factorhouse.io
+```
 
-mkdir awsmp-chart && cd awsmp-chart
-helm pull oci://709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-aws-hourly \
-  --version <VERSION_NUMBER>
-tar xf $(pwd)/* && find $(pwd) -maxdepth 1 -type f -delete
+Update Helm repositories to ensure you install the latest version of Kpow.
+
+```bash
+helm repo update
 ```
 
 
@@ -99,7 +96,7 @@ Some fields, particularly integers and strings containing quotation marks, requi
 The following example shows how to install Kpow from the command line, highlighting how to handle escaped commas and quotes:
 
 ```bash
-helm install kpow ./kpow-aws-hourly/ \
+helm install kpow factorhouse/kpow-aws-hourly \
   --set serviceAccount.create=false \
   --set serviceAccount.name=kpow \
   --set env.BOOTSTRAP="b-1.<cluster-name>.<cluster-identifier>.c8.kafka.us-east-1.amazonaws.com:9096" \
@@ -125,7 +122,7 @@ NOTES:
 You can configure Kpow with a ConfigMap of environment variables as follows:
 
 ```bash
-helm install kpow ./kpow-aws-hourly/ \
+helm install kpow factorhouse/kpow-aws-hourly \
   --set envFromConfigMap=kpow-config \
   --create-namespace --namespace factorhouse
 ```
@@ -185,9 +182,25 @@ helm delete kpow --namespace factorhouse
 
 You can run Kpow with local edits to chart files to provide custom configuration.
 
+#### Pull and Untar the Kpow Charts
+
+```bash
+helm pull factorhouse/kpow-aws-hourly --untar --untardir .
+```
+
 #### Make Local Edits
 
 Make any edits required to `kpow-aws-hourly/Chart.yaml` or `kpow-aws-hourly/values.yaml` (adding volume mounts, etc).
+
+#### Run Local Charts
+
+The command to run local charts is slightly different, see `./kpow-aws-hourly` rather than `factorhouse/kpow-aws-hourly`.
+
+```bash
+helm install kpow ./kpow-aws-hourly \
+  <.. --set configuration, etc ..> \
+  --create-namespace -namespace factorhouse
+```
 
 #### Configuring with an Existing ConfigMap
 
