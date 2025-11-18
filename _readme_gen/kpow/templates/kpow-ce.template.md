@@ -52,7 +52,7 @@ The following example shows how to install Kpow from the command line, highlight
 ```bash
 helm install kpow factorhouse/kpow-ce \
   --set env.LICENSE_ID="00000000-0000-0000-0000-000000000001" \
-  --set env.LICENSE_CODE="KPOW_COMMUNITY" \
+  --set env.LICENSE_CODE="COMMUNITY" \
   --set env.LICENSEE="Doe\, Jane" \ # <-- note the escaped comma
   --set env.LICENSE_EXPIRY="2022-01-01" \
   --set env.LICENSE_SIGNATURE="638......A51" \

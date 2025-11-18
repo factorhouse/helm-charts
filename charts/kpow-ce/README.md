@@ -53,7 +53,6 @@ ip-192-168-...-21.ec2.internal   Ready    <none>   2m15s    v1.32.9-eks-113cf36
 ...
 ```
 
-
 ## Run Kpow in Kubernetes
 
 ### Configure the Kpow Helm Repository
@@ -70,7 +69,6 @@ Update Helm repositories to ensure you install the latest version of Kpow.
 helm repo update
 ```
 
-
 ### Start a Kpow Instance
 
 #### Start Kpow with config from '--set env.XYZ'
@@ -84,7 +82,7 @@ The following example shows how to install Kpow from the command line, highlight
 ```bash
 helm install kpow factorhouse/kpow-ce \
   --set env.LICENSE_ID="00000000-0000-0000-0000-000000000001" \
-  --set env.LICENSE_CODE="KPOW_COMMUNITY" \
+  --set env.LICENSE_CODE="COMMUNITY" \
   --set env.LICENSEE="Doe\, Jane" \ # <-- note the escaped comma
   --set env.LICENSE_EXPIRY="2022-01-01" \
   --set env.LICENSE_SIGNATURE="638......A51" \
@@ -162,7 +160,6 @@ kubectl logs $POD_NAME --namespace factorhouse
 ```bash
 helm delete kpow --namespace factorhouse
 ```
-
 
 ### Start Kpow with Local Changes
 
@@ -249,7 +246,6 @@ See the Kubernetes documentation
 on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
 for more information.
 
-
 ```bash
 helm install kpow ./kpow-ce \
   --set envFromSecret=kpow-secrets \
@@ -269,7 +265,6 @@ How you provide these files is down to user preference, we are not able to provi
 regard.
 
 You may find the Kubernetes documentation on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) useful.
-
 
 ### Kpow Memory and CPU Requirements
 
@@ -301,7 +296,6 @@ resources:
     memory: 2Gi
 ```
 
-
 Adjust these values from the command line like so:
 
 ```bash
@@ -329,7 +323,6 @@ ephemeralTmp:
       sizeLimit: "100Mi" # Configurable size
 ```
 
-
 ---
 
 ### Get Help!
@@ -339,4 +332,3 @@ If you have any issues or errors, please contact support@factorhouse.io.
 ### Licensing and Modifications
 
 This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
-
