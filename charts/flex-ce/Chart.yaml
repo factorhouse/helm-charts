@@ -2,7 +2,7 @@ apiVersion: v2
 name: flex-ce
 description: Run Flex for Apache Flink Community Edition in Kubernetes
 type: application
-version: 1.0.71
+version: 1.0.72
 appVersion: "95.1"
 keywords:
   - flink
