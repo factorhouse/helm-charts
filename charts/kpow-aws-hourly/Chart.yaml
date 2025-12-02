@@ -2,7 +2,7 @@ apiVersion: v2
 name: kpow-aws-hourly
 description: Run Kpow Hourly from the AWS Marketplace in Kubernetes
 type: application
-version: 1.0.3
+version: 1.0.03
 appVersion: "95.1"
 keywords:
   - kafka
