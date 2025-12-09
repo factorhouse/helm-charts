@@ -37,6 +37,10 @@ serviceAccount:
   annotations: { }
   name: kpow-ce
 
+# Controls if the K8s API token should be mounted in the pod.
+# It is set on the Pod to ensure enforcement.
+automountServiceAccountToken: false
+
 podAnnotations: { }
 
 podSecurityContext: { }
