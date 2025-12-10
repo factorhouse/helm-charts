@@ -210,6 +210,9 @@
                 }
             }
         },
+        "automountServiceAccountToken": {
+            "type": "boolean"
+        },
         "tolerations": {
             "type": "array"
         },
