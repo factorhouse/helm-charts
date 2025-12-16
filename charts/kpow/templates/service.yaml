@@ -1,3 +1,4 @@
+{{- if .Values.service.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -16,5 +17,12 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    {{- if .Values.api.enabled }}
+    - port: {{ .Values.api.port }}
+      targetPort: api
+      protocol: TCP
+      name: api
+    {{- end }}
   selector:
     {{- include "kpow.selectorLabels" . | nindent 4 }}
+{{- end -}}
