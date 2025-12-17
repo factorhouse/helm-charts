@@ -5,6 +5,17 @@
         "affinity": {
             "type": "object"
         },
+        "api": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "port": {
+                    "type": "integer"
+                }
+            }
+        },
         "autoscaling": {
             "type": "object",
             "properties": {
@@ -99,6 +110,32 @@
                     "type": "array"
                 },
                 "ingressClassName": {
+                    "type": "string"
+                },
+                "pathType": {
+                    "type": "string"
+                },
+                "tls": {
+                    "type": "array"
+                }
+            }
+        },
+        "ingressApi": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "hosts": {
+                    "type": "array"
+                },
+                "ingressClassName": {
+                    "type": "string"
+                },
+                "pathType": {
                     "type": "string"
                 },
                 "tls": {
