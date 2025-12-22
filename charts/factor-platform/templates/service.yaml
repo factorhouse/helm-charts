@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "kpow.fullname" . }}
+  name: {{ include "platform.fullname" . }}
   namespace: "{{ .Release.Namespace }}"
   labels:
-    {{- include "kpow.labels" . | nindent 4 }}
+    {{- include "platform.labels" . | nindent 4 }}
   {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -24,5 +24,5 @@ spec:
       name: api
     {{- end }}
   selector:
-    {{- include "kpow.selectorLabels" . | nindent 4 }}
+    {{- include "platform.selectorLabels" . | nindent 4 }}
 {{- end -}}

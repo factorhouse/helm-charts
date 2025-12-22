@@ -1,8 +1,8 @@
 apiVersion: v2
-name: kpow
-description: Run Kpow for Apache Kafka in Kubernetes
+name: factor-platform
+description: Run Factor Platform in Kubernetes
 type: application
-version: 1.0.73
+version: 0.0.1
 appVersion: "95.1"
 keywords:
   - kafka
@@ -10,10 +10,13 @@ keywords:
   - kafka-connect
   - schema-registry
   - ksqldb
+  - flink
+  - flink-ui
   - monitoring
-home: "https://factorhouse.io/kpow"
+  - control-plane
+home: "https://factorhouse.io/products/factor-platform"
 sources:
-  - "https://github.com/factorhouse/kpow"
+  - "https://github.com/factorhouse/factor-platform"
   - "https://github.com/factorhouse/helm-charts/"
 maintainers:
   - name: "Factor House Support"

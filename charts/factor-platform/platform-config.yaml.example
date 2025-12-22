@@ -1,16 +1,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: kpow-config
+  name: platform-config
 data:
 
-  ### See https://docs.factorhouse.io/kpow-ee/ for full configuration and installation guides
+  ### See https://docs.factorhouse.io/platform/getting-started for full configuration and installation guides
 
-  ### Note: The simplest Kpow configuration requires only LICENSE_* and BOOTSTRAP.
+  ### Note: The simplest Factor Platform configuration requires only LICENSE_* and BOOTSTRAP.
 
-  ### License Configuration (https://factorhouse.io/kpow/get-started/ <- 30 day trial licenses available)
-  ### Note: If using the AWS Marketplace Kpow Container you do not need to supply LICENSE* parameters
-  ###       (https://aws.amazon.com/marketplace/seller-profile?id=ab356f1d-3394-4523-b5d4-b339e3cca9e0)
+  ### License Configuration (https://factorhouse.io/products/factor-platform <- 30 day trial licenses available)
 
   LICENSE_ID: "replace-me"
   LICENSE_CODE: "replace-me"
@@ -20,18 +18,18 @@ data:
 
   ### Resource Set Configuration
 
-  ### Kpow manages sets of Kafka resources. Clusters, Schema Registries and Kafka Connect Installations.
-  ### To configure multiple kafka resources prepend environment variables with _2, _3, etc.
+  ### Factor Platform manages sets of Kafka and Flink resources.
+  ### Kafka resources include Kafka clusters, Schema Registries, and Kafka Connect installations, while Flink resources are Flink clusters.
+  ### To configure multiple resource sets, append numeric suffixes like `_2`, `_3`, etc., to the environment variables.
   ### Resources with the same set-id are considered related.
   ###   E.g. cluster with BOOTSTRAP_2 can decode messages from with registry SCHEMA_REGISTRY_URL_2.
 
-  ## Optional Resource Set Name (this is displayed in the Kpow UI for each set of resources)
+  ## Optional Resource Set Name (this is displayed in the Kafka cluster UI for each set of resources)
 
   ENVIRONMENT_NAME: "Change Me"
 
   ## Kafka Cluster Configuration
   ## Required parameters for configuring a Kafka Cluster
-  ## You must configure at least one Kafka Booktstrap to use Kpow.
 
   BOOTSTRAP: "replace-with-your-bootstrap-url"
 
@@ -84,6 +82,14 @@ data:
   # KSQLDB_USE_ALPN: "true"
   # KSQLDB_NAME: "Confluent ksqlDB"
 
+  ## Flink Cluster Configuration
+
+  FLINK_REST_URL: "http://replace-with-your-flink-rest-url"
+
+  ## Optional Resource Set Name (this is displayed in the Flink cluster UI for each set of resources)
+
+  FLINK_ENVIRONMENT_NAME: "Change Me"
+
   ### System Configuration
 
   # PORT: "3000" - the port to serve content
@@ -119,6 +125,7 @@ data:
   ## Prometheus Endpoints
 
   # PROMETHEUS_EGRESS: "true"
+  # PROMETHEUS_LABEL_ENV: "true"
 
   ### User Authentication and Authorization
 
@@ -152,6 +159,10 @@ data:
   # ALLOW_KSQLDB_EXECUTE: true
   # ALLOW_KSQLDB_TERMINATE_QUERY: true
   # ALLOW_KSQLDB_INSERT: true
+  # ALLOW_FLINK_SUBMIT: true
+  # ALLOW_FLINK_JOB_TERMINATE: true
+  # ALLOW_FLINK_JAR_DELETE: true
+  # ALLOW_FLINK_JOB_EDIT: true
 
   ## Data Policy (Masking / Redaction) Configuration
 

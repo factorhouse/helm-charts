@@ -1,5 +1,5 @@
 {{- if .Values.ingressApi.enabled -}}
-{{- $fullName := include "kpow.fullname" . -}}
+{{- $fullName := include "platform.fullname" . -}}
 {{- $apiPort := .Values.api.port -}}
 {{- $pathType := .Values.ingressApi.pathType -}}
 {{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.Version -}}
@@ -14,7 +14,7 @@ metadata:
   name: {{ $fullName }}-api
   namespace: "{{ .Release.Namespace }}"
   labels:
-    {{- include "kpow.labels" . | nindent 4 }}
+    {{- include "platform.labels" . | nindent 4 }}
   {{- with .Values.ingressApi.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
