@@ -42,6 +42,12 @@ README_CONFIG = {
         #     "output": BASE_DIR / f"../{CHART_FOLDER}/flex-aws-hourly/README.md",
         # },
     ],
+    "platform": [
+        {
+            "template": BASE_DIR / "platform" / "templates/platform.template.md",
+            "output": BASE_DIR / f"../{CHART_FOLDER}/factor-platform/README.md",
+        },
+    ],
 }
 
 
