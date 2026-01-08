@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: 709825985650.dkr.ecr.us-east-1.amazonaws.com/factor-house/kpow-annual
   pullPolicy: IfNotPresent
-  tag: "95.1.1"
+  tag: "95.2"
 
 imagePullSecrets: []
 nameOverride: ""
