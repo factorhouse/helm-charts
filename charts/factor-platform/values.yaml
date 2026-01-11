@@ -1,0 +1,132 @@
+replicaCount: 1
+
+image:
+  repository: factorhouse/factor-platform
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: [ ]
+nameOverride: ""
+fullnameOverride: ""
+
+env: { }
+envFromConfigMap: null
+envFromSecret: null
+volumeMounts: [ ]
+# - name: rbac-config
+#   mountPath: /path/to/rbac-config.yaml
+#   subPath: rbac-config.yaml
+volumes: [ ]
+# - name: rbac-config
+#   configMap:
+#     name: "my-kpow-config"
+
+ephemeralTmp:
+  # Sets up an emptyDir volume mount for Snappy compression and other features requiring /tmp access.
+  # Enable this if you use Snappy compression and you have readOnly filesystem Pod policies.
+  enabled: false
+  volumeMount:
+    name: "fh-tmp"
+    mountPath: "/opt/factorhouse/tmp"
+  volume:
+    emptyDir:
+      medium: Memory # Optional: for better performance
+      sizeLimit: "100Mi" # Configurable size
+
+serviceAccount:
+  create: true
+  annotations: { }
+  name: kpow
+
+# Controls if the K8s API token should be mounted in the pod.
+# It is set on the Pod to ensure enforcement.
+automountServiceAccountToken: false
+
+podAnnotations: { }
+
+podSecurityContext: { }
+
+securityContext:
+  allowPrivilegeEscalation: false
+  privileged: false
+  runAsNonRoot: true
+  runAsUser: 1001
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  enabled: true
+  annotations: {}
+  type: ClusterIP
+  port: 3000
+
+api:
+  enabled: false
+  port: 3001
+
+ingress:
+  enabled: false
+  ingressClassName: ""
+  # The pathType for the UI paths defined below.
+  # Valid values are: Prefix, Exact, ImplementationSpecific.
+  pathType: Prefix
+  tls: []
+  # Example TLS configuration:
+  # - secretName: kpow-tls
+  #   hosts:
+  #     - kpow.example.com
+  annotations: {}
+  # Host-based routing rules for the Ingress.
+  hosts: []
+  # Example host configuration with a specific hostname:
+  # - host: kpow.example.com
+  #   paths:
+  #     - /
+
+ingressApi:
+  enabled: false
+  ingressClassName: ""
+  # The pathType for the UI paths defined below.
+  # Valid values are: Prefix, Exact, ImplementationSpecific.
+  pathType: Prefix
+  tls: []
+  # Example TLS configuration:
+  # - secretName: kpow-tls
+  #   hosts:
+  #     - kpow-api.example.com
+  annotations: {}
+  # Host-based routing rules for the Ingress.
+  hosts: []
+  # Example host configuration with a specific hostname:
+  # - host: kpow-api.example.com
+  #   paths:
+  #     - /
+
+# We recommend running Kpow w/ Guaranteed QOS
+# The default resource limit/requests are suitable for a multi-cluster installation (up to 12 Kafka Clusters + Connect + Schema).
+# For a smaller installation (up to 6 clusters) you can modify to 1CPU, 4GB heap, monitor performance afterwards and adjust as necessary.
+# For a single cluster you can modify to 0.5CPU, 2GB heap, monitor performance afterwards and adjust as necessary.
+# These resources also depend on the size of the clusters (number of brokers/topics/groups in particular).
+# The default settings are suitable for even the largest single cluster installation. For tuning assistance contact support@factorhouse.io
+resources:
+  limits:
+    cpu: 2
+    memory: 8Gi
+  requests:
+    cpu: 2
+    memory: 8Gi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 85
+  targetMemoryUtilizationPercentage: 85
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }
+
+labels: { }

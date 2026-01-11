@@ -5,6 +5,7 @@
 
 Official Helm Charts for Factor House products. Currently supported:
 
+- [Factor Platform](charts/factor-platform/README.md) (`factorhouse/factor-platform`)
 - [Kpow](charts/kpow/README.md) (`factorhouse/kpow`)
 - [Kpow Community Edition](charts/kpow-ce/README.md) (`factorhouse/kpow-ce`)
 - [Kpow AWS Annual (AWS Marketplace)](charts/kpow-aws-annual/README.md)(`factorhouse/kpow-aws-annual`)

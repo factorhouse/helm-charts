@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "platform.fullname" . }}
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "platform.labels" . | nindent 4 }}
+    {{- include "platform.providedLabels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "platform.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "platform.selectorLabels" . | nindent 8 }}
+        {{- include "platform.providedLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "platform.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.automountServiceAccountToken }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.env }}
+          env:
+            {{- range $key, $val := . }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+          {{- end }}
+          {{- if or .Values.envFromConfigMap .Values.envFromSecret }}
+          envFrom:
+            {{- with .Values.envFromConfigMap }}
+            - configMapRef:
+                name: {{ . }}
+            {{- end }}
+            {{- with .Values.envFromSecret }}
+            - secretRef:
+                name: {{ . }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            {{- if .Values.api.enabled }}
+            - name: api
+              containerPort: {{ .Values.api.port }}
+              protocol: TCP
+            {{- end }}
+          {{- if or .Values.volumeMounts .Values.ephemeralTmp.enabled }}
+          volumeMounts:
+            {{- if .Values.volumeMounts }}
+              {{- toYaml .Values.volumeMounts | nindent 12 }}
+            {{- end }}
+            {{- if .Values.ephemeralTmp.enabled }}
+            - name: {{ .Values.ephemeralTmp.volumeMount.name | quote }}
+              mountPath: {{ .Values.ephemeralTmp.volumeMount.mountPath | quote }}
+            {{- end }}
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /up
+              port: http
+            initialDelaySeconds: 90
+            periodSeconds: 30
+          livenessProbe:
+            httpGet:
+              path: /healthy
+              port: http
+            initialDelaySeconds: 120
+            periodSeconds: 30
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.volumes .Values.ephemeralTmp.enabled }}
+      volumes:
+        {{- if .Values.volumes }}
+          {{- toYaml .Values.volumes | nindent 8 }}
+        {{- end }}
+        {{- if .Values.ephemeralTmp.enabled }}
+        - name: {{ .Values.ephemeralTmp.volumeMount.name | quote }}
+          {{- /* Check if emptyDir config exists, otherwise provide a default empty one */}}
+          {{- if .Values.ephemeralTmp.volume.emptyDir }}
+          emptyDir:
+            {{- toYaml .Values.ephemeralTmp.volume.emptyDir | nindent 12 }}
+          {{- else }}
+          emptyDir: {} # Default emptyDir if no specific config
+          {{- end }}
+        {{- end }}
+      {{- end }}
