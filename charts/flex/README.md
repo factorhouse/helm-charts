@@ -1,12 +1,14 @@
-# Run Flex for Apache Flink in Kubernetes
+# Flex Helm Chart
 
-[Flex](https://factorhouse.io/flex) is the all-in-one toolkit to manage, monitor, and learn about your Flink resources.
+This is the official **Flex Helm Chart** for deploying Flex for Apache Flink® on Kubernetes.
 
-This Helm chart uses the [factorhouse/flex](https://hub.docker.com/r/factorhouse/flex) container from Dockerhub.
+[Flex](https://factorhouse.io/products/flex) is an all-in-one toolkit to manage, monitor, and learn about your Flink resources.
+
+The Flex Helm Chart is maintained by Factor House and uses the [factorhouse/flex](https://hub.docker.com/r/factorhouse/flex) container from Docker Hub.
 
 # Helm Charts
 
-This repository contains a single Helm chart that uses the [factorhouse/flex](https://hub.docker.com/r/factorhouse/flex)
+This repository contains a single Helm Chart that uses the [factorhouse/flex](https://hub.docker.com/r/factorhouse/flex)
 container on Dockerhub.
 
 - [Prerequisites](#prerequisites)
@@ -53,7 +55,6 @@ ip-192-168-...-21.ec2.internal   Ready    <none>   2m15s    v1.32.9-eks-113cf36
 ...
 ```
 
-
 ## Run Flex in Kubernetes
 
 ### Configure the Flex Helm Repository
@@ -69,7 +70,6 @@ Update Helm repositories to ensure you install the latest version of Flex.
 ```bash
 helm repo update
 ```
-
 
 ### Start a Flex Instance
 
@@ -163,7 +163,6 @@ kubectl logs --namespace factorhouse $POD_NAME
 helm delete --namespace factorhouse flex
 ```
 
-
 ### Start Flex with Local Changes
 
 You can run Flex with local edits to these charts and provide local configuration when running Flex.
@@ -249,7 +248,6 @@ See the Kubernetes documentation
 on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
 for more information.
 
-
 ```bash
 helm install flex ./flex \
   --set envFromSecret=flex-secrets \
@@ -271,7 +269,6 @@ regard.
 You may find the Kubernetes documentation
 on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume)
 useful.
-
 
 ### Flex Memory and CPU Requirements
 
@@ -305,7 +302,6 @@ resources:
     memory: 2Gi
 ```
 
-
 Adjust these values from the command line like so:
 
 ```bash
@@ -329,4 +325,3 @@ If you have any issues or errors, please contact support@factorhouse.io.
 ### Licensing and Modifications
 
 This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
-
