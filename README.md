@@ -1,15 +1,24 @@
-# Factor House Helm Charts
+# Factor House Helm Charts for Kpow and Flex
 
 [![Release Charts](https://github.com/factorhouse/helm-charts/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/factorhouse/helm-charts/actions/workflows/release.yml)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/factorhouse)](https://artifacthub.io/packages/search?org=factorhouse)
 
-Official Helm Charts for Factor House products. Currently supported:
+Official Helm Charts for Factor House products, including the Kpow Helm Chart and Flex Helm Chart.
 
-- [Kpow](charts/kpow/README.md) (`factorhouse/kpow`)
+### Kpow Helm Charts
+
+Deploy Kpow for Apache Kafka® on Kubernetes.
+
+- [Kpow Helm Chart](charts/kpow/README.md) (`factorhouse/kpow`)
 - [Kpow Community Edition](charts/kpow-ce/README.md) (`factorhouse/kpow-ce`)
-- [Kpow AWS Annual (AWS Marketplace)](charts/kpow-aws-annual/README.md)(`factorhouse/kpow-aws-annual`)
-- [Kpow AWS Hourly (AWS Marketplace)](charts/kpow-aws-hourly/README.md)(`factorhouse/kpow-aws-hourly`)
-- [Flex](charts/flex/README.md) (`factorhouse/flex`)
+- [Kpow AWS Annual (AWS Marketplace)](charts/kpow-aws-annual/README.md) (`factorhouse/kpow-aws-annual`)
+- [Kpow AWS Hourly (AWS Marketplace)](charts/kpow-aws-hourly/README.md) (`factorhouse/kpow-aws-hourly`)
+
+### Flex Helm Charts
+
+Deploy Flex for Apache Flink® on Kubernetes.
+
+- [Flex Helm Chart](charts/flex/README.md) (`factorhouse/flex`)
 - [Flex Community Edition](charts/flex-ce/README.md) (`factorhouse/flex-ce`)
 
 # Installation
