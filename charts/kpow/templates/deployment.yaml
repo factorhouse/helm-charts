@@ -6,6 +6,10 @@ metadata:
   labels:
     {{- include "kpow.labels" . | nindent 4 }}
     {{- include "kpow.providedLabels" . | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
