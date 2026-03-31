@@ -2,8 +2,8 @@ apiVersion: v2
 name: flex
 description: Run Flex for Apache Flink in Kubernetes
 type: application
-version: 1.0.75
-appVersion: "95.3"
+version: 1.0.76
+appVersion: "95.4"
 keywords:
   - flink
   - flink-ui
