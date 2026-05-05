@@ -83,9 +83,9 @@ The following example shows how to install Factor Platform from the command line
 ```bash
 helm install platform factorhouse/factor-platform \
   --set env.LICENSE_ID="00000000-0000-0000-0000-000000000001" \
-  --set env.LICENSE_CODE="KPOW_CREDIT" \
+  --set env.LICENSE_CODE="PLATFORM" \
   --set env.LICENSEE="Factor House\, Inc." \ # <-- note the escaped comma
-  --set env.LICENSE_EXPIRY="2022-01-01" \
+  --set env.LICENSE_EXPIRY="2027-01-01" \
   --set env.LICENSE_SIGNATURE="638......A51" \
   --set env.LICENSE_CREDITS="7" \
   --set env.BOOTSTRAP="127.0.0.1:9092\,127.0.0.1:9093\,127.0.0.1:9094" \ # <-- note the escaped commas
