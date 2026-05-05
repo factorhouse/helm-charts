@@ -43,7 +43,7 @@ aws eks --region <your-aws-region> update-kubeconfig --name <your-eks-cluster-na
 Updated context arn:aws:eks:<your-aws-region>:123123123:cluster/<your-eks-cluster-name> in /your/.kube/config
 ```
 
-#### Confirm Kubernetes Cluster Availability
+#### Confirm Kubernetes cluster availability
 
 ```bash
 kubectl get nodes
@@ -70,8 +70,7 @@ Update Helm repositories to ensure you install the latest version of Factor Plat
 helm repo update
 ```
 
-
-### Start a Factor Platform Instance
+### Start a Factor Platform instance
 
 #### Start Factor Platform with config from '--set env.XYZ'
 
@@ -115,7 +114,7 @@ NOTES:
   kubectl --namespace factorhouse port-forward $POD_NAME 3000:3000
 ```
 
-#### Start Factor Platform with Environment Variables from a ConfigMap
+#### Start Factor Platform with environment variables from a ConfigMap
 
 You can configure Factor Platform with a ConfigMap of environment variables as follows:
 
@@ -129,7 +128,7 @@ This approach requires a `ConfigMap` named `platform-config` to already exist in
 
 For general guidance, see the Kubernetes documentation on [configuring all key-value pairs in a ConfigMap as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables).
 
-### Manage a Factor Platform Instance
+### Manage a Factor Platform instance
 
 #### Set the $POD_NAME variable and test the Factor Platform UI
 
@@ -177,7 +176,7 @@ helm delete platform --namespace factorhouse
 ```
 
 
-### Start Factor Platform with Local Changes
+### Start Factor Platform with local changes
 
 You can run Factor Platform with local edits to these charts and provide local configuration when running Factor Platform.
 
@@ -187,11 +186,11 @@ You can run Factor Platform with local edits to these charts and provide local c
 helm pull factorhouse/factor-platform --untar --untardir .
 ```
 
-#### Make Local Edits
+#### Make local edits
 
 Make any edits required to `factor-platform/Chart.yaml` or `factor-platform/values.yaml` (adding volume mounts, etc).
 
-#### Run Local Charts
+#### Run local charts
 
 The command to run local charts is slightly different, see `./factor-platform` rather than `factorhouse/factor-platform`.
 
@@ -201,11 +200,11 @@ helm install platform ./factor-platform \
   --create-namespace -namespace factorhouse
 ```
 
-#### Configuring with an Existing ConfigMap
+#### Configuring with an existing ConfigMap
 
 This is the recommended method for managing configuration separately from the Helm chart.
 
-**1. Prepare Your ConfigMap Manifest**
+**1. Prepare your ConfigMap manifest**
 
 Copy the example file ([platform-config.yaml.example](./platform-config.yaml.example)), then edit it to set your desired `metadata.name` (e.g., `platform-config`) and fill in your configuration under the `data` section.
 
@@ -238,7 +237,7 @@ See [platform-config.yaml.example](./platform-config.yaml.example) for an exampl
 
 See the Kubernetes documentation on [configuring all key-value pairs in a config map as container environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) for more information.
 
-### Manage Sensitive Environment Variables
+### Manage sensitive environment variables
 
 This helm chart accepts the name of a secret containing sensitive parameters, e.g.
 
@@ -270,7 +269,7 @@ helm install platform ./factor-platform \
   --create-namespace --namespace factorhouse
 ```
 
-### Provide Files to the Factor Platform Pod
+### Provide files to the Factor Platform pod
 
 There are occasions where you must provide files to the Factor Platform Pod in order for Factor Platform to run correctly, such files include:
 
@@ -284,7 +283,7 @@ regard.
 You may find the Kubernetes documentation on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) useful.
 
 
-### Factor Platform Memory and CPU Requirements
+### Factor Platform memory and CPU requirements
 
 The chart runs Factor Platform with Guaranteed QoS, having resource request and limit set to these values by default:
 
@@ -302,7 +301,7 @@ These default resource settings are conservative and are intended for deployment
 
 If you're running the Factor Platform with a single Kafka and Flink cluster, you can experiment with reducing resource allocations down to our suggested minimum:
 
-#### Minimum Resource Requirements
+#### Minimum resource requirements
 
 ```yaml
 resources:
@@ -345,11 +344,11 @@ ephemeralTmp:
 
 ---
 
-### Get Help!
+### Get help!
 
 If you have any issues or errors, please contact support@factorhouse.io.
 
-### Licensing and Modifications
+### Licensing and modifications
 
 This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
 
