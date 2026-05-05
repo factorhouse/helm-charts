@@ -21,6 +21,12 @@ Deploy Flex for Apache Flink® on Kubernetes.
 - [Flex Helm Chart](charts/flex/README.md) (`factorhouse/flex`)
 - [Flex Community Edition](charts/flex-ce/README.md) (`factorhouse/flex-ce`)
 
+### Factor Platform Helm Charts
+
+Deploy Factor Platform on Kubernetes.
+
+- [Factor Platform](charts/factor-platform/README.md) (`factorhouse/factor-platform`)
+
 # Installation
 
 [Helm](https://helm.sh/) must be installed to use the charts. Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
