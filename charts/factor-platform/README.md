@@ -88,12 +88,19 @@ helm install platform factorhouse/factor-platform \
   --set env.LICENSEE="Factor House\, Inc." \ # <-- note the escaped comma
   --set env.LICENSE_EXPIRY="2022-01-01" \
   --set env.LICENSE_SIGNATURE="638......A51" \
+  --set env.LICENSE_CREDITS="7" \
   --set env.BOOTSTRAP="127.0.0.1:9092\,127.0.0.1:9093\,127.0.0.1:9094" \ # <-- note the escaped commas
   --set env.SECURITY_PROTOCOL="SASL_PLAINTEXT" \
   --set env.SASL_MECHANISM="PLAIN" \
   --set env.SASL_JAAS_CONFIG="org.apache.kafka.common.security.plain.PlainLoginModule required username=\"user\" password=\"secret\";" \ # <-- note the escaped quotes
   --set env.FLINK_REST_URL="http://127.0.0.1:8081" \
-  --set env.LICENSE_CREDITS="7" \
+  --set env.POSTGRES_HOST="postgres.factorhouse.svc.cluster.local" \
+  --set env.POSTGRES_USER="factor_platform" \
+  --set env.POSTGRES_PASSWORD="secure-password-here" \
+  --set env.POSTGRES_DB_NAME="factor_platform" \
+  --set env.POSTGRES_PORT="5432" \
+  --set env.POSTGRES_SSL="false" \
+  --set env.POSTGRES_SSLMODE="prefer" \
   --create-namespace --namespace factorhouse
 
 NAME: platform
