@@ -125,7 +125,7 @@ helm install platform factorhouse/factor-platform \
   --create-namespace --namespace factorhouse
 ```
 
-This approach requires a `ConfigMap` named `kpow-config` to already exist in the `factorhouse` namespace. To configure Factor Platform with a local ConfigMap template, see [Configuring with an Existing ConfigMap](#configuring-with-an-existing-configmap). You can also refer to [platform-config.yaml.example](./platform-config.yaml.example) for a sample ConfigMap manifest.
+This approach requires a `ConfigMap` named `platform-config` to already exist in the `factorhouse` namespace. To configure Factor Platform with a local ConfigMap template, see [Configuring with an Existing ConfigMap](#configuring-with-an-existing-configmap). You can also refer to [platform-config.yaml.example](./platform-config.yaml.example) for a sample ConfigMap manifest.
 
 For general guidance, see the Kubernetes documentation on [configuring all key-value pairs in a ConfigMap as environment variables](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables).
 
