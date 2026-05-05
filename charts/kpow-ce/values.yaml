@@ -69,6 +69,18 @@ ingress:
   tls: [ ]
   ingressClassName: ""
 
+gateway:
+  enabled: false
+  gatewayName: ""
+  gatewayNamespace: ""
+  annotations: {}
+  pathType: PathPrefix
+  hosts: []
+  # Example host configuration:
+  # - host: kpow-ce.example.com
+  #   paths:
+  #     - /
+
 # We recommend running Kpow Community w/ Guaranteed QOS
 # For a single cluster you can modify to 0.5CPU, 2GB heap, monitor performance afterwards and adjust as necessary.
 resources:

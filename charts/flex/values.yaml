@@ -92,6 +92,32 @@ ingressApi:
   #   paths:
   #     - /
 
+gateway:
+  enabled: false
+  gatewayName: ""
+  gatewayNamespace: ""
+  annotations: {}
+  # The path type for HTTPRoute matches.
+  # Valid values are: PathPrefix, Exact.
+  pathType: PathPrefix
+  hosts: []
+  # Example host configuration:
+  # - host: flex.example.com
+  #   paths:
+  #     - /
+
+gatewayApi:
+  enabled: false
+  gatewayName: ""
+  gatewayNamespace: ""
+  annotations: {}
+  pathType: PathPrefix
+  hosts: []
+  # Example host configuration:
+  # - host: flex-api.example.com
+  #   paths:
+  #     - /
+
 # We recommend running Flex w/ Guaranteed QOS
 # The default resource limit/requests are suitable for a multi-cluster installation
 # For a smaller installation (up to 6 clusters) you can modify to 1CPU, 4GB heap, monitor performance afterwards and adjust as necessary.

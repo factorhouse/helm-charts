@@ -1,4 +1,4 @@
-{{- if .Values.ingressApi.enabled -}}
+{{- if and .Values.ingressApi.enabled (not .Values.gatewayApi.enabled) -}}
 {{- $fullName := include "kpow.fullname" . -}}
 {{- $apiPort := .Values.api.port -}}
 {{- $pathType := .Values.ingressApi.pathType -}}

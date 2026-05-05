@@ -1,4 +1,4 @@
-{{- if .Values.ingress.enabled -}}
+{{- if and .Values.ingress.enabled (not .Values.gateway.enabled) -}}
 {{- $fullName := include "kpow.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 {{- $pathType := .Values.ingress.pathType -}}
