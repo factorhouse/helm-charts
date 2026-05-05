@@ -1,12 +1,14 @@
-# Run Kpow for Apache Kafka with Kubernetes
+# Kpow Helm Chart
 
-[Kpow](https://factorhouse.io/kpow/) is the all-in-one toolkit to manage, monitor, and learn about your Kafka resources.
+This is the official **Kpow Helm Chart** for deploying Kpow for Apache Kafka® on Kubernetes.
 
-This Helm chart uses the [factorhouse/kpow](https://hub.docker.com/r/factorhouse/kpow) container from Dockerhub.
+[Kpow](https://factorhouse.io/products/kpow/) is the all-in-one toolkit to manage, monitor, and learn about your Kafka resources.
+
+The Kpow Helm Chart is maintained by Factor House and uses the [factorhouse/kpow](https://hub.docker.com/r/factorhouse/kpow) container from Dockerhub.
 
 # Helm Charts
 
-This repository contains a single Helm chart that uses the [factorhouse/kpow](https://hub.docker.com/r/factorhouse/kpow) container on Dockerhub.
+This repository contains a single Helm Chart that uses the [factorhouse/kpow](https://hub.docker.com/r/factorhouse/kpow) container on Dockerhub.
 
 - [Prerequisites](#prerequisites)
 - [Kubernetes](#kubernetes)
@@ -53,7 +55,6 @@ ip-192-168-...-21.ec2.internal   Ready    <none>   2m15s    v1.32.9-eks-113cf36
 ...
 ```
 
-
 ## Run Kpow in Kubernetes
 
 ### Configure the Kpow Helm Repository
@@ -69,7 +70,6 @@ Update Helm repositories to ensure you install the latest version of Kpow.
 ```bash
 helm repo update
 ```
-
 
 ### Start a Kpow Instance
 
@@ -167,7 +167,6 @@ kubectl logs $POD_NAME --namespace factorhouse
 helm delete kpow --namespace factorhouse
 ```
 
-
 ### Start Kpow with Local Changes
 
 You can run Kpow with local edits to these charts and provide local configuration when running Kpow.
@@ -194,7 +193,7 @@ helm install kpow ./kpow \
 
 #### Configuring with an Existing ConfigMap
 
-This is the recommended method for managing configuration separately from the Helm chart.
+This is the recommended method for managing configuration separately from the Helm Chart.
 
 **1. Prepare Your ConfigMap Manifest**
 
@@ -215,7 +214,7 @@ kubectl apply -f kpow-config.yaml --namespace factorhouse
 
 **3. Install the Chart**
 
-Install the Helm chart, using `--set` to reference the name of the `ConfigMap` you just created. The `--create-namespace` flag will ensure the target namespace exists.
+Install the Helm Chart, using `--set` to reference the name of the `ConfigMap` you just created. The `--create-namespace` flag will ensure the target namespace exists.
 
 ```bash
 helm install kpow ./kpow \
@@ -231,7 +230,7 @@ See the Kubernetes documentation on [configuring all key-value pairs in a config
 
 ### Manage Sensitive Environment Variables
 
-This helm chart accepts the name of a secret containing sensitive parameters, e.g.
+This Helm Chart accepts the name of a secret containing sensitive parameters, e.g.
 
 ```yaml
 apiVersion: v1
@@ -247,12 +246,11 @@ data:
 kubectl apply -f ./kpow-secrets.yaml --namespace factorhouse
 ```
 
-Then run the helm chart (this can be used in conjunction with `envFromConfigMap`)
+Then run the Helm Chart (this can be used in conjunction with `envFromConfigMap`)
 
 See the Kubernetes documentation
 on [configuring all key value pairs in a secret as environment variables](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#configure-all-key-value-pairs-in-a-secret-as-container-environment-variables)
 for more information.
-
 
 ```bash
 helm install kpow ./kpow \
@@ -273,7 +271,6 @@ How you provide these files is down to user preference, we are not able to provi
 regard.
 
 You may find the Kubernetes documentation on [injecting data into applications](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume) useful.
-
 
 ### Kpow Memory and CPU Requirements
 
@@ -305,7 +302,6 @@ resources:
     memory: 2Gi
 ```
 
-
 Adjust these values from the command line like so:
 
 ```bash
@@ -333,7 +329,6 @@ ephemeralTmp:
       sizeLimit: "100Mi" # Configurable size
 ```
 
-
 ---
 
 ### Get Help!
@@ -343,4 +338,3 @@ If you have any issues or errors, please contact support@factorhouse.io.
 ### Licensing and Modifications
 
 This repository is Apache 2.0 licensed, you are welcome to clone and modify as required.
-

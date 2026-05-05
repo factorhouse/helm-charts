@@ -36,6 +36,9 @@
                 }
             }
         },
+        "deploymentAnnotations": {
+            "type": "object"
+        },
         "env": {
             "type": "object"
         },

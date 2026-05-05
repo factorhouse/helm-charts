@@ -29,6 +29,8 @@ serviceAccount:
 # It is set on the Pod to ensure enforcement.
 automountServiceAccountToken: false
 
+deploymentAnnotations: {}
+
 podAnnotations: {}
 
 podSecurityContext: {}
