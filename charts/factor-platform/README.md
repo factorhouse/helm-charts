@@ -2,7 +2,7 @@
 
 [Factor Platform](https://factorhouse.io/products/factor-platform) is a unified control plane for real-time data streaming that brings together Apache Kafka®, Apache Flink®, and beyond.
 
-This Helm chart uses the [factorhouse/kpow](https://hub.docker.com/r/factorhouse/factor-platform) container from Dockerhub.
+This Helm chart uses the [factorhouse/factor-platform](https://hub.docker.com/r/factorhouse/factor-platform) container from Dockerhub.
 
 # Helm Charts
 
