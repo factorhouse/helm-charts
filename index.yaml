@@ -1,5 +1,37 @@
 apiVersion: v1
 entries:
+  factor-platform:
+  - annotations:
+      artifacthub.io/signKey: |
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
+    appVersion: "95.1"
+    created: "2026-05-05T04:10:03.485930237Z"
+    description: Run Factor Platform in Kubernetes
+    digest: ac6272d8cb101ef61c2a5cc71329bb3c5eee8ed3f974e1b6bb23bfac8da2b71f
+    home: https://factorhouse.io/products/factor-platform
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - flink
+    - flink-ui
+    - monitoring
+    - control-plane
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: factor-platform
+    sources:
+    - https://github.com/factorhouse/factor-platform
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/factor-platform-0.0.1/factor-platform-0.0.1.tgz
+    version: 0.0.1
   flex:
   - annotations:
       artifacthub.io/signKey: |
@@ -2699,4 +2731,4 @@ entries:
     urls:
     - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.58/kpow-ce-1.0.58.tgz
     version: 1.0.58
-generated: "2026-04-09T09:36:25.865544431Z"
+generated: "2026-05-05T04:10:03.486128467Z"
