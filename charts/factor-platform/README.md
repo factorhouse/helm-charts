@@ -33,9 +33,9 @@ See the [Factor Platform Documentation](https://docs.factorhouse.io/platform/get
 
 ### Configure Kubernetes/EKS
 
-You need to connect to a Kubernetes environment before you can install Kpow.
+You need to connect to a Kubernetes environment before you can install Factor Platform.
 
-The following examples demonstrate installing Kpow in [Amazon EKS](https://aws.amazon.com/eks/).
+The following examples demonstrate installing Factor Platform in [Amazon EKS](https://aws.amazon.com/eks/).
 
 ```bash
 aws eks --region <your-aws-region> update-kubeconfig --name <your-eks-cluster-name>
@@ -272,7 +272,7 @@ helm install platform ./factor-platform \
 
 ### Provide Files to the Factor Platform Pod
 
-There are occasions where you must provide files to the Kpow Pod in order for Kpow to run correctly, such files include:
+There are occasions where you must provide files to the Factor Platform Pod in order for Factor Platform to run correctly, such files include:
 
 - RBAC configuration
 - SSL Keystores
