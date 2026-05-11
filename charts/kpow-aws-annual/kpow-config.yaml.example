@@ -123,6 +123,7 @@ data:
   # ALLOW_TOPIC_DELETE: "true"
   # ALLOW_TOPIC_INSPECT: "true"
   # ALLOW_TOPIC_PRODUCE: "true"
+  # ALLOW_TOPIC_CLONE: "true"
   # ALLOW_TOPIC_EDIT: "true"
   # ALLOW_BROKER_EDIT: "true"
   # ALLOW_GROUP_EDIT: "true"
