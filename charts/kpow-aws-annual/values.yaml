@@ -70,6 +70,13 @@ api:
   enabled: false
   port: 3001
 
+# HTTP Gateway
+#
+# Kpow supports either the traditional Ingress API for basic HTTP routing capabilities or
+# the next generation Gateway API for more advanced HTTP routing.
+#
+# Only one approach (ingress or gateway) can be enabled at a time
+
 ingress:
   enabled: false
   ingressClassName: ""
@@ -104,6 +111,32 @@ ingressApi:
   # Host-based routing rules for the Ingress.
   hosts: []
   # Example host configuration with a specific hostname:
+  # - host: kpow-api.example.com
+  #   paths:
+  #     - /
+
+gateway:
+  enabled: false
+  gatewayName: ""
+  gatewayNamespace: ""
+  annotations: {}
+  # The path type for HTTPRoute matches.
+  # Valid values are: PathPrefix, Exact.
+  pathType: PathPrefix
+  hosts: []
+  # Example host configuration:
+  # - host: kpow.example.com
+  #   paths:
+  #     - /
+
+gatewayApi:
+  enabled: false
+  gatewayName: ""
+  gatewayNamespace: ""
+  annotations: {}
+  pathType: PathPrefix
+  hosts: []
+  # Example host configuration:
   # - host: kpow-api.example.com
   #   paths:
   #     - /
