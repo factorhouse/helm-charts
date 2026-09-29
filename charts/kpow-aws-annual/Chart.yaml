@@ -2,7 +2,7 @@ apiVersion: v2
 name: kpow-aws-annual
 description: Run Kpow Annual from the AWS Marketplace in Kubernetes
 type: application
-version: 1.0.78
+version: 1.0.80
 appVersion: "96.5"
 keywords:
   - kafka
