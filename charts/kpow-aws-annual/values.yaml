@@ -26,8 +26,8 @@ volumes: []
 
 ephemeralTmp:
   # Sets up an emptyDir volume mount for Snappy compression and other features requiring /tmp access.
-  # Enable this if you use Snappy compression and you have readOnly filesystem Pod policies.
-  enabled: false
+  # Specifically supports readOnly pod security policies by default, disable to save 100MB of JVM heap space.
+  enabled: true
   volumeMount:
     name: "fh-tmp"
     mountPath: "/opt/factorhouse/tmp"
