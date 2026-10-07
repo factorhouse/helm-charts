@@ -30,7 +30,7 @@ ephemeralTmp:
   enabled: true
   volumeMount:
     name: "fh-tmp"
-    mountPath: "/opt/factorhouse/tmp"
+    mountPath: "/tmp"
   volume:
     emptyDir:
       medium: Memory # Optional: for better performance
@@ -53,9 +53,10 @@ podSecurityContext: {}
 
 securityContext:
   allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
   privileged: false
   runAsNonRoot: true
-  runAsUser: 1001
+  runAsUser: 65532
   capabilities:
     drop:
       - ALL
