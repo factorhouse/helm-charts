@@ -1366,6 +1366,34 @@ entries:
         fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
         url: https://keybase.io/factorhouse/pgp_keys.asc
     apiVersion: v2
+    appVersion: "96.6"
+    created: "2026-11-13T06:14:08.247959404Z"
+    description: Run Kpow for Apache Kafka in Kubernetes
+    digest: 0db1cfa5e0f842975962021ea6599f08639c03b0173b4400d1113ca418dace49
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-1.0.85/kpow-1.0.85.tgz
+    version: 1.0.85
+  - annotations:
+      artifacthub.io/signKey: |
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
     appVersion: "96.5"
     created: "2026-09-24T06:23:27.476860235Z"
     description: Run Kpow for Apache Kafka in Kubernetes
@@ -2181,6 +2209,35 @@ entries:
         fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
         url: https://keybase.io/factorhouse/pgp_keys.asc
     apiVersion: v2
+    appVersion: "96.6"
+    created: "2026-11-13T06:14:08.434655909Z"
+    description: Run Kpow Annual from the AWS Marketplace in Kubernetes
+    digest: 2dcc4e01c5ec67233bb7b2854dc6e16e79680981fddc65203298775ccb9a0e80
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - monitoring
+    - aws
+    - aws-marketplace
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-aws-annual
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-aws-annual-1.0.81/kpow-aws-annual-1.0.81.tgz
+    version: 1.0.81
+  - annotations:
+      artifacthub.io/signKey: |
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
     appVersion: "96.5"
     created: "2026-09-29T09:16:18.746998156Z"
     description: Run Kpow Annual from the AWS Marketplace in Kubernetes
@@ -2733,6 +2790,36 @@ entries:
         fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
         url: https://keybase.io/factorhouse/pgp_keys.asc
     apiVersion: v2
+    appVersion: "96.6"
+    created: "2026-11-13T06:14:08.607077819Z"
+    description: Run Kpow Hourly from the AWS Marketplace in Kubernetes
+    digest: ca4b20e7a9aed855cc0e6be83a8f8faea18e7fa0ffe89a9cd83657ba35ec6d62
+    home: https://factorhouse.io/kpow
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    - aws
+    - aws-marketplace
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-aws-hourly
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-aws-hourly-1.0.13/kpow-aws-hourly-1.0.13.tgz
+    version: 1.0.13
+  - annotations:
+      artifacthub.io/signKey: |
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
     appVersion: "96.5"
     created: "2026-09-24T06:23:27.874853421Z"
     description: Run Kpow Hourly from the AWS Marketplace in Kubernetes
@@ -3119,6 +3206,34 @@ entries:
     - https://github.com/factorhouse/helm-charts/releases/download/kpow-aws-hourly-1.0.0/kpow-aws-hourly-1.0.0.tgz
     version: 1.0.0
   kpow-ce:
+  - annotations:
+      artifacthub.io/signKey: |
+        fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
+        url: https://keybase.io/factorhouse/pgp_keys.asc
+    apiVersion: v2
+    appVersion: "96.6"
+    created: "2026-11-13T06:14:08.776867867Z"
+    description: Run Kpow for Apache Kafka Community Edition in Kubernetes
+    digest: fee4801ad4f2795205e67a018196e197cb5ceb41c9782933bf1d0a8e4016dc35
+    home: https://factorhouse.io/kpow/community
+    keywords:
+    - kafka
+    - kafka-ui
+    - kafka-connect
+    - schema-registry
+    - ksqldb
+    - monitoring
+    maintainers:
+    - email: support@factorhouse.io
+      name: Factor House Support
+    name: kpow-ce
+    sources:
+    - https://github.com/factorhouse/kpow
+    - https://github.com/factorhouse/helm-charts/
+    type: application
+    urls:
+    - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.83/kpow-ce-1.0.83.tgz
+    version: 1.0.83
   - annotations:
       artifacthub.io/signKey: |
         fingerprint: 9686853629F9810E63A72373BA3D0FAE1A26981F
@@ -3795,4 +3910,4 @@ entries:
     urls:
     - https://github.com/factorhouse/helm-charts/releases/download/kpow-ce-1.0.58/kpow-ce-1.0.58.tgz
     version: 1.0.58
-generated: "2026-09-29T09:16:18.747377618Z"
+generated: "2026-11-13T06:14:08.777405836Z"
