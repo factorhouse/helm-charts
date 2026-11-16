@@ -2,8 +2,8 @@ apiVersion: v2
 name: factor-platform
 description: Run Factor Platform in Kubernetes
 type: application
-version: 0.0.5
-appVersion: "96.5"
+version: 0.0.6
+appVersion: "96.7"
 keywords:
   - kafka
   - kafka-ui
