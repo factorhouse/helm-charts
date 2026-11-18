@@ -2,8 +2,8 @@ apiVersion: v2
 name: kpow-ce
 description: Run Kpow for Apache Kafka Community Edition in Kubernetes
 type: application
-version: 1.0.84
-appVersion: "96.7"
+version: 1.0.85
+appVersion: "96.8"
 keywords:
   - kafka
   - kafka-ui
