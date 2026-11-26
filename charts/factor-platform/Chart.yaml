@@ -3,7 +3,7 @@ name: factor-platform
 description: Run Factor Platform in Kubernetes
 type: application
 version: 0.0.7
-appVersion: "96.8"
+appVersion: "97.1"
 keywords:
   - kafka
   - kafka-ui
